@@ -3073,7 +3073,7 @@
           "Noto Sans Regular"
         ],
         "text-size": 14,
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 5,
         "text-rotation-alignment": "map",
         "symbol-placement": "line",
@@ -3101,7 +3101,7 @@
           "Noto Sans Regular"
         ],
         "text-size": 14,
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 5,
         "text-rotation-alignment": "map",
         "symbol-placement": "line",
@@ -3137,7 +3137,7 @@
           "Noto Sans Regular"
         ],
         "text-size": 14,
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 5,
         "text-rotation-alignment": "map",
         "symbol-placement": "point",
@@ -3184,7 +3184,7 @@
             ]
           ]
         },
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 5,
         "text-rotation-alignment": "map",
         "symbol-placement": "point",
@@ -3304,7 +3304,7 @@
             "circle-11"
           ]
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-offset": [
           0,
           0.6
@@ -3366,7 +3366,7 @@
             "circle-11"
           ]
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-offset": [
           0,
           0.6
@@ -3416,7 +3416,7 @@
         ],
         "text-anchor": "top",
         "icon-image": "{class}-11",
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-offset": [
           0,
           0.6
@@ -3566,7 +3566,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "symbol-placement": "line",
         "text-rotation-alignment": "map"
       },
@@ -3596,7 +3596,7 @@
         ],
         "text-anchor": "top",
         "icon-image": "airport-11",
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-offset": [
           0,
           0.6
@@ -3635,7 +3635,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-transform": "uppercase",
         "text-max-width": 9,
         "visibility": "visible"
@@ -3673,7 +3673,7 @@
             ]
           ]
         },
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 8,
         "visibility": "visible"
       },
@@ -3698,7 +3698,7 @@
           "Noto Sans Regular"
         ],
         "text-size": 14,
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 8,
         "visibility": "visible"
       },
@@ -3732,7 +3732,7 @@
           "Noto Sans Regular"
         ],
         "text-size": 14,
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 8,
         "visibility": "visible"
       },
@@ -3765,7 +3765,7 @@
           "Noto Sans Regular"
         ],
         "text-size": 14,
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-max-width": 8,
         "icon-image": "star-11",
         "text-offset": [
@@ -3808,7 +3808,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-size": {
           "stops": [
             [
@@ -3858,7 +3858,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-size": {
           "stops": [
             [
@@ -3908,7 +3908,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-size": {
           "stops": [
             [
@@ -3958,7 +3958,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-size": {
           "stops": [
             [
@@ -3997,7 +3997,7 @@
         "text-font": [
           "Noto Sans Regular"
         ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-size": 14,
         "text-max-width": 6.25,
         "text-transform": "uppercase",
@@ -4017,7 +4017,7 @@
       "minzoom": 5,
       "maxzoom": 9,
       "layout": {
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
+        "text-field": ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]],
         "text-font": [
           "Noto Sans Regular"
         ],

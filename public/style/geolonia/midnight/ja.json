@@ -1,14 +1,11 @@
 {
   "version": 8,
-  "name": "Geolonia Basic",
+  "name": "Geolonia Midnight",
+  "metadata": {},
   "sources": {
     "geolonia": {
       "type": "vector",
       "url": "https://api.geolonia.com/v1/sources?key=YOUR-API-KEY"
-    },
-    "japanese-prefectures": {
-      "type": "geojson",
-      "data": "https://cdn.geolonia.com/japanese-prefs/v1.geojson"
     }
   },
   "sprite": "https://sprites.geolonia.com/basic",
@@ -18,7 +15,7 @@
       "id": "background",
       "type": "background",
       "paint": {
-        "background-color": "rgba(254, 254, 254, 1)"
+        "background-color": "rgba(19, 28, 54, 1)"
       }
     },
     {
@@ -35,7 +32,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "fill-color": "#fff",
+        "fill-color": "rgba(255, 255, 255, 0.05)",
         "fill-opacity": {
           "base": 1,
           "stops": [
@@ -70,7 +67,7 @@
         ]
       ],
       "paint": {
-        "fill-color": "hsla(0, 60%, 87%, 0.23)"
+        "fill-color": "hsla(0, 60%, 87%, 0.1)"
       }
     },
     {
@@ -92,7 +89,7 @@
         ]
       ],
       "paint": {
-        "fill-color": "hsla(49, 100%, 88%, 0.34)"
+        "fill-color": "rgba(255, 255, 255, 0.1)"
       }
     },
     {
@@ -106,22 +103,20 @@
         "Polygon"
       ],
       "paint": {
-        "fill-color": "rgba(102, 170, 68, 1)",
+        "fill-color": "rgba(36, 66, 15, 0.17)",
         "fill-opacity": {
+          "base": 1.8,
           "stops": [
             [
-              7,
-              0
+              9,
+              0.5
             ],
             [
-              9,
+              12,
               0.2
             ]
           ]
         }
-      },
-      "layout": {
-        "visibility": "visible"
       }
     },
     {
@@ -135,22 +130,10 @@
         "Polygon"
       ],
       "layout": {
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
-        "line-color": {
-          "base": 1,
-          "stops": [
-            [
-              7,
-              "hsla(96, 40%, 49%, 0.36)"
-            ],
-            [
-              8,
-              "hsla(96, 40%, 49%, 0.66)"
-            ]
-          ]
-        },
+        "line-color": "rgba(56, 85, 36, 0.35)",
         "line-dasharray": [
           3,
           3
@@ -168,7 +151,7 @@
         "cemetery"
       ],
       "paint": {
-        "fill-color": "#e0e4dd"
+        "fill-color": "rgba(255, 255, 255, 0.1)"
       }
     },
     {
@@ -182,7 +165,7 @@
         "hospital"
       ],
       "paint": {
-        "fill-color": "#fde"
+        "fill-color": "rgba(255, 255, 255, 0.1)"
       }
     },
     {
@@ -196,7 +179,7 @@
         "school"
       ],
       "paint": {
-        "fill-color": "#f0e8f8"
+        "fill-color": "rgba(255, 255, 255, 0.1)"
       }
     },
     {
@@ -210,7 +193,7 @@
         "railway"
       ],
       "paint": {
-        "fill-color": "hsla(30, 19%, 90%, 0.4)"
+        "fill-color": "rgba(255, 255, 255, 0.1)"
       }
     },
     {
@@ -219,12 +202,25 @@
       "source": "geolonia",
       "source-layer": "landcover",
       "filter": [
-        "==",
-        "class",
-        "wood"
+        "any",
+        [
+          "==",
+          "class",
+          "wood"
+        ],
+        [
+          "==",
+          "class",
+          "public_park"
+        ],
+        [
+          "==",
+          "class",
+          "grass"
+        ]
       ],
       "paint": {
-        "fill-color": "#6a4",
+        "fill-color": "rgba(39, 128, 44, 0.3)",
         "fill-opacity": 0.2,
         "fill-outline-color": "hsla(0, 0%, 0%, 0.03)",
         "fill-antialias": {
@@ -243,61 +239,21 @@
       }
     },
     {
-      "id": "landcover-grass",
-      "type": "fill",
-      "source": "geolonia",
-      "source-layer": "landcover",
-      "filter": [
-        "==",
-        "class",
-        "grass"
-      ],
-      "paint": {
-        "fill-color": "#d8e8c8",
-        "fill-opacity": 1
-      }
-    },
-    {
-      "id": "landcover-grass-park",
-      "type": "fill",
-      "source": "geolonia",
-      "source-layer": "park",
-      "filter": [
-        "==",
-        "class",
-        "public_park"
-      ],
-      "paint": {
-        "fill-color": "#d8e8c8",
-        "fill-opacity": 0.8
-      }
-    },
-    {
       "id": "waterway_tunnel",
       "type": "line",
       "source": "geolonia",
       "source-layer": "waterway",
       "minzoom": 14,
       "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "river",
-          "stream",
-          "canal"
-        ],
-        [
-          "==",
-          "brunnel",
-          "tunnel"
-        ]
+        "==",
+        "brunnel",
+        "tunnel"
       ],
       "layout": {
         "line-cap": "round"
       },
       "paint": {
-        "line-color": "#a0c8f0",
+        "line-color": "rgba(1, 17, 44, 1)",
         "line-width": {
           "base": 1.3,
           "stops": [
@@ -318,105 +274,26 @@
       }
     },
     {
-      "id": "waterway-other",
+      "id": "waterway",
       "type": "line",
       "source": "geolonia",
       "source-layer": "waterway",
       "filter": [
-        "!in",
-        "class",
-        "canal",
-        "river",
-        "stream"
+        "!=",
+        "brunnel",
+        "tunnel"
       ],
       "layout": {
         "line-cap": "round"
       },
       "paint": {
-        "line-color": "#a0c8f0",
+        "line-color": "rgba(1, 17, 44, 1)",
         "line-width": {
           "base": 1.3,
           "stops": [
             [
               13,
               0.5
-            ],
-            [
-              20,
-              2
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "waterway-stream-canal",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "waterway",
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "canal",
-          "stream"
-        ],
-        [
-          "!=",
-          "brunnel",
-          "tunnel"
-        ]
-      ],
-      "layout": {
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "#a0c8f0",
-        "line-width": {
-          "base": 1.3,
-          "stops": [
-            [
-              13,
-              0.5
-            ],
-            [
-              20,
-              6
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "waterway-river",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "waterway",
-      "filter": [
-        "all",
-        [
-          "==",
-          "class",
-          "river"
-        ],
-        [
-          "!=",
-          "brunnel",
-          "tunnel"
-        ]
-      ],
-      "layout": {
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "#a0c8f0",
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              10,
-              0.8
             ],
             [
               20,
@@ -438,11 +315,11 @@
         "Polygon"
       ],
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "fill-opacity": 1,
-        "fill-color": "#a0c8f0",
+        "fill-color": "rgba(0, 0, 0, 1)",
         "fill-translate": {
           "base": 1,
           "stops": [
@@ -473,7 +350,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "fill-color": "rgba(152, 209, 252, 1)"
+        "fill-color": "rgba(1, 17, 44, 1)"
       }
     },
     {
@@ -525,8 +402,8 @@
         ]
       ],
       "paint": {
-        "line-color": "#A58043",
-        "line-opacity": 0.4,
+        "line-color": "rgba(204, 204, 204, 0.4)",
+        "line-opacity": 1,
         "line-width": {
           "base": 1.4,
           "stops": [
@@ -548,249 +425,6 @@
           6,
           4
         ]
-      }
-    },
-    {
-      "id": "tunnel-service-track-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        [
-          "==",
-          "brunnel",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "service",
-          "track"
-        ]
-      ],
-      "layout": {
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#cfcdca",
-        "line-dasharray": [
-          0.5,
-          0.25
-        ],
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              15,
-              1
-            ],
-            [
-              16,
-              4
-            ],
-            [
-              20,
-              11
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "tunnel-minor-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        [
-          "==",
-          "brunnel",
-          "tunnel"
-        ],
-        [
-          "==",
-          "class",
-          "minor"
-        ]
-      ],
-      "layout": {
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#cfcdca",
-        "line-opacity": {
-          "stops": [
-            [
-              12,
-              0
-            ],
-            [
-              12.5,
-              1
-            ]
-          ]
-        },
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              12,
-              0.5
-            ],
-            [
-              13,
-              1
-            ],
-            [
-              14,
-              4
-            ],
-            [
-              20,
-              15
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "tunnel-secondary-tertiary-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        [
-          "==",
-          "brunnel",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "secondary",
-          "tertiary"
-        ]
-      ],
-      "layout": {
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#e9ac77",
-        "line-opacity": 1,
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              8,
-              1.5
-            ],
-            [
-              20,
-              17
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "tunnel-trunk-primary-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        [
-          "==",
-          "brunnel",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "primary",
-          "trunk"
-        ]
-      ],
-      "layout": {
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#e9ac77",
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              5,
-              0.4
-            ],
-            [
-              6,
-              0.6
-            ],
-            [
-              7,
-              1.5
-            ],
-            [
-              20,
-              22
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "tunnel-motorway-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        [
-          "==",
-          "brunnel",
-          "tunnel"
-        ],
-        [
-          "==",
-          "class",
-          "motorway"
-        ]
-      ],
-      "layout": {
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#e9ac77",
-        "line-dasharray": [
-          0.5,
-          0.25
-        ],
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              5,
-              0.4
-            ],
-            [
-              6,
-              0.6
-            ],
-            [
-              7,
-              1.5
-            ],
-            [
-              20,
-              22
-            ]
-          ]
-        }
       }
     },
     {
@@ -820,7 +454,7 @@
         ]
       ],
       "paint": {
-        "line-color": "#cba",
+        "line-color": "rgba(85, 85, 85, 0.4)",
         "line-dasharray": [
           1.5,
           0.75
@@ -905,7 +539,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fff",
+        "line-color": "rgba(85, 85, 85, 0.4)",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -949,7 +583,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fff4c6",
+        "line-color": "rgba(85, 85, 85, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -992,7 +626,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fff4c6",
+        "line-color": "rgba(85, 85, 85, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1035,7 +669,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "#ffdaa6",
+        "line-color": "rgba(85, 85, 85, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1079,80 +713,6 @@
           2,
           2
         ]
-      }
-    },
-    {
-      "id": "aeroway-taxiway-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "aeroway",
-      "minzoom": 12,
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "taxiway"
-        ]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(153, 153, 153, 1)",
-        "line-width": {
-          "base": 1.5,
-          "stops": [
-            [
-              11,
-              2
-            ],
-            [
-              17,
-              12
-            ]
-          ]
-        },
-        "line-opacity": 1
-      }
-    },
-    {
-      "id": "aeroway-runway-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "aeroway",
-      "minzoom": 12,
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "runway"
-        ]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(153, 153, 153, 1)",
-        "line-width": {
-          "base": 1.5,
-          "stops": [
-            [
-              11,
-              5
-            ],
-            [
-              17,
-              55
-            ]
-          ]
-        },
-        "line-opacity": 1
       }
     },
     {
@@ -1324,413 +884,6 @@
       }
     },
     {
-      "id": "highway-motorway-link-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "minzoom": 12,
-      "filter": [
-        "all",
-        [
-          "!in",
-          "brunnel",
-          "bridge",
-          "tunnel"
-        ],
-        [
-          "==",
-          "class",
-          "motorway_link"
-        ]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#e9ac77",
-        "line-opacity": 1,
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              12,
-              1
-            ],
-            [
-              13,
-              3
-            ],
-            [
-              14,
-              4
-            ],
-            [
-              20,
-              15
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "highway-link-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "minzoom": 13,
-      "filter": [
-        "all",
-        [
-          "!in",
-          "brunnel",
-          "bridge",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "primary_link",
-          "secondary_link",
-          "tertiary_link",
-          "trunk_link"
-        ]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#e9ac77",
-        "line-opacity": 1,
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              12,
-              1
-            ],
-            [
-              13,
-              3
-            ],
-            [
-              14,
-              4
-            ],
-            [
-              20,
-              15
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "highway-minor-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "minzoom": 13,
-      "filter": [
-        "all",
-        [
-          "==",
-          "$type",
-          "LineString"
-        ],
-        [
-          "all",
-          [
-            "!=",
-            "brunnel",
-            "tunnel"
-          ],
-          [
-            "in",
-            "class",
-            "minor",
-            "service",
-            "track"
-          ]
-        ]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "rgba(222, 222, 222, 1)",
-        "line-opacity": {
-          "stops": [
-            [
-              12,
-              0
-            ],
-            [
-              12.5,
-              1
-            ]
-          ]
-        },
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              12,
-              0.5
-            ],
-            [
-              13,
-              1
-            ],
-            [
-              14,
-              4
-            ],
-            [
-              20,
-              15
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "highway-secondary-tertiary-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "filter": [
-        "all",
-        [
-          "!in",
-          "brunnel",
-          "bridge",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "secondary",
-          "tertiary"
-        ]
-      ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(222, 222, 222, 1)",
-        "line-opacity": 1,
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              8,
-              1.5
-            ],
-            [
-              20,
-              17
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "highway-primary-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "minzoom": 5,
-      "filter": [
-        "all",
-        [
-          "!in",
-          "brunnel",
-          "bridge",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "primary"
-        ]
-      ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(222, 222, 222, 1)",
-        "line-opacity": {
-          "stops": [
-            [
-              7,
-              0
-            ],
-            [
-              8,
-              1
-            ]
-          ]
-        },
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              7,
-              0
-            ],
-            [
-              8,
-              0.6
-            ],
-            [
-              9,
-              1.5
-            ],
-            [
-              20,
-              22
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "highway-trunk-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "minzoom": 5,
-      "filter": [
-        "all",
-        [
-          "!in",
-          "brunnel",
-          "bridge",
-          "tunnel"
-        ],
-        [
-          "in",
-          "class",
-          "trunk"
-        ]
-      ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(222, 222, 222, 1)",
-        "line-opacity": {
-          "stops": [
-            [
-              5,
-              0
-            ],
-            [
-              6,
-              1
-            ]
-          ]
-        },
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              5,
-              0
-            ],
-            [
-              6,
-              0.6
-            ],
-            [
-              7,
-              1.5
-            ],
-            [
-              20,
-              22
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "id": "highway-motorway-casing",
-      "type": "line",
-      "source": "geolonia",
-      "source-layer": "transportation",
-      "minzoom": 4,
-      "filter": [
-        "all",
-        [
-          "!in",
-          "brunnel",
-          "bridge",
-          "tunnel"
-        ],
-        [
-          "==",
-          "class",
-          "motorway"
-        ]
-      ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(222, 222, 222, 1)",
-        "line-width": {
-          "base": 1.2,
-          "stops": [
-            [
-              4,
-              0
-            ],
-            [
-              5,
-              0.4
-            ],
-            [
-              6,
-              0.6
-            ],
-            [
-              7,
-              1.5
-            ],
-            [
-              20,
-              22
-            ]
-          ]
-        },
-        "line-opacity": {
-          "stops": [
-            [
-              4,
-              0
-            ],
-            [
-              5,
-              1
-            ]
-          ]
-        }
-      }
-    },
-    {
       "id": "highway-path",
       "type": "line",
       "source": "geolonia",
@@ -1759,7 +912,7 @@
         ]
       ],
       "paint": {
-        "line-color": "#dddddd",
+        "line-color": "rgba(238, 238, 238, 0.16)",
         "line-dasharray": [
           1.5,
           0.75
@@ -1915,7 +1068,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "#fff",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-opacity": 1,
         "line-width": {
           "base": 1.2,
@@ -1962,7 +1115,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -1979,7 +1132,8 @@
               13
             ]
           ]
-        }
+        },
+        "line-opacity": 1
       }
     },
     {
@@ -2015,7 +1169,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2068,7 +1222,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2122,7 +1276,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2345,10 +1499,11 @@
         ]
       ],
       "layout": {
-        "line-join": "round"
+        "line-join": "round",
+        "visibility": "none"
       },
       "paint": {
-        "line-color": "rgba(153, 153, 153, 1)",
+        "line-color": "rgba(153, 153, 153, 0.2)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2580,7 +1735,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2623,7 +1778,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2665,7 +1820,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "rgba(255, 255, 255, 1)",
+        "line-color": "rgba(255, 255, 255, 0.4)",
         "line-width": {
           "base": 1.2,
           "stops": [
@@ -2704,7 +1859,7 @@
         ]
       ],
       "paint": {
-        "line-color": "#999999",
+        "line-color": "rgba(153, 153, 153, 0.8)",
         "line-width": {
           "stops": [
             [
@@ -2741,8 +1896,11 @@
           "tunnel"
         ]
       ],
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
-        "line-color": "#ffffff",
+        "line-color": "rgba(255, 255, 255, 1)",
         "line-dasharray": [
           6,
           4
@@ -2915,7 +2073,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "hsl(248, 7%, 66%)",
+        "line-color": "rgba(255, 255, 255, 0.2)",
         "line-width": {
           "base": 1,
           "stops": [
@@ -3014,7 +2172,7 @@
         "line-join": "round"
       },
       "paint": {
-        "line-color": "rgba(154, 189, 214, 1)",
+        "line-color": "rgba(255, 255, 255, 0.2)",
         "line-width": {
           "base": 1,
           "stops": [
@@ -3081,9 +2239,9 @@
         "symbol-spacing": 350
       },
       "paint": {
-        "text-color": "#74aee9",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.5,
-        "text-halo-color": "rgba(255,255,255,0.7)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3109,9 +2267,9 @@
         "text-letter-spacing": 0.2
       },
       "paint": {
-        "text-color": "#74aee9",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.5,
-        "text-halo-color": "rgba(255,255,255,0.7)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3145,9 +2303,9 @@
         "text-letter-spacing": 0.2
       },
       "paint": {
-        "text-color": "#74aee9",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.5,
-        "text-halo-color": "rgba(255,255,255,0.7)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3193,9 +2351,9 @@
         "visibility": "visible"
       },
       "paint": {
-        "text-color": "#74aee9",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.5,
-        "text-halo-color": "rgba(255,255,255,0.7)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3206,8 +2364,8 @@
       "minzoom": 15,
       "paint": {
         "fill-opacity": 0.6,
-        "fill-color": "rgba(225, 225, 225, 1)",
-        "fill-outline-color": "#ffffff",
+        "fill-color": "rgba(255, 255, 255, 0.1)",
+        "fill-outline-color": "rgba(255, 255, 255, 1)",
         "fill-antialias": true
       }
     },
@@ -3217,6 +2375,9 @@
       "source": "geolonia",
       "source-layer": "building",
       "minzoom": 15,
+      "layout": {
+        "visibility": "none"
+      },
       "paint": {
         "fill-extrusion-color": "#dedede",
         "fill-extrusion-height": [
@@ -3252,9 +2413,6 @@
           ]
         ],
         "fill-extrusion-opacity": 0.6
-      },
-      "layout": {
-        "visibility": "none"
       }
     },
     {
@@ -3314,9 +2472,9 @@
       },
       "paint": {
         "text-halo-blur": 0.5,
-        "text-color": "#666",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1,
-        "text-halo-color": "#ffffff"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3376,65 +2534,9 @@
       },
       "paint": {
         "text-halo-blur": 0.5,
-        "text-color": "#666",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1,
-        "text-halo-color": "#ffffff"
-      }
-    },
-    {
-      "id": "poi-railway",
-      "type": "symbol",
-      "source": "geolonia",
-      "source-layer": "poi",
-      "minzoom": 13,
-      "filter": [
-        "all",
-        [
-          "==",
-          "$type",
-          "Point"
-        ],
-        [
-          "has",
-          "name"
-        ],
-        [
-          "==",
-          "class",
-          "railway"
-        ],
-        [
-          "==",
-          "subclass",
-          "station"
-        ]
-      ],
-      "layout": {
-        "text-padding": 2,
-        "text-font": [
-          "Noto Sans Regular"
-        ],
-        "text-anchor": "top",
-        "icon-image": "{class}-11",
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
-        "text-offset": [
-          0,
-          0.6
-        ],
-        "text-size": 12,
-        "text-max-width": 9,
-        "icon-optional": false,
-        "icon-ignore-placement": false,
-        "icon-allow-overlap": false,
-        "text-ignore-placement": false,
-        "text-allow-overlap": false,
-        "text-optional": true
-      },
-      "paint": {
-        "text-halo-blur": 0.5,
-        "text-color": "#666",
-        "text-halo-width": 1,
-        "text-halo-color": "#ffffff"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3571,8 +2673,8 @@
         "text-rotation-alignment": "map"
       },
       "paint": {
-        "text-halo-color": "#f8f4f0",
-        "text-color": "hsl(30, 23%, 62%)",
+        "text-halo-color": "#000000",
+        "text-color": "#FFFFFF",
         "text-halo-width": 0.5
       }
     },
@@ -3609,41 +2711,9 @@
       },
       "paint": {
         "text-halo-blur": 0.5,
-        "text-color": "#666",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1,
-        "text-halo-color": "#ffffff"
-      }
-    },
-    {
-      "id": "place-other",
-      "type": "symbol",
-      "source": "geolonia",
-      "source-layer": "place",
-      "minzoom": 14,
-      "filter": [
-        "!in",
-        "class",
-        "city",
-        "town",
-        "village",
-        "country",
-        "continent"
-      ],
-      "layout": {
-        "text-letter-spacing": 0.1,
-        "text-size": 10,
-        "text-font": [
-          "Noto Sans Regular"
-        ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
-        "text-transform": "uppercase",
-        "text-max-width": 9,
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-color": "#633",
-        "text-halo-width": 1.2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3678,9 +2748,9 @@
         "visibility": "visible"
       },
       "paint": {
-        "text-color": "#333",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3703,9 +2773,11 @@
         "visibility": "visible"
       },
       "paint": {
-        "text-color": "rgba(102, 102, 102, 1)",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
+        "text-halo-color": "#000000",
+        "icon-halo-color": "rgba(18, 14, 14, 0)",
+        "icon-color": "rgba(255, 255, 255, 1)"
       }
     },
     {
@@ -3737,9 +2809,9 @@
         "visibility": "visible"
       },
       "paint": {
-        "text-color": "rgba(102, 102, 102, 1)",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -3777,13 +2849,13 @@
         "visibility": "visible"
       },
       "paint": {
-        "text-color": "#333",
+        "text-color": "#FFFFFF",
         "text-halo-width": 1.2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
+        "text-halo-color": "#000000"
       }
     },
     {
-      "id": "place-country-other",
+      "id": "place-country",
       "type": "symbol",
       "source": "geolonia",
       "source-layer": "place",
@@ -3793,165 +2865,6 @@
           "==",
           "class",
           "country"
-        ],
-        [
-          ">=",
-          "rank",
-          3
-        ],
-        [
-          "!has",
-          "iso_a2"
-        ]
-      ],
-      "layout": {
-        "text-font": [
-          "Noto Sans Regular"
-        ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
-        "text-size": {
-          "stops": [
-            [
-              3,
-              11
-            ],
-            [
-              7,
-              17
-            ]
-          ]
-        },
-        "text-transform": "uppercase",
-        "text-max-width": 6.25,
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-halo-blur": 1,
-        "text-color": "#334",
-        "text-halo-width": 2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
-      }
-    },
-    {
-      "id": "place-country-3",
-      "type": "symbol",
-      "source": "geolonia",
-      "source-layer": "place",
-      "filter": [
-        "all",
-        [
-          "==",
-          "class",
-          "country"
-        ],
-        [
-          ">=",
-          "rank",
-          3
-        ],
-        [
-          "has",
-          "iso_a2"
-        ]
-      ],
-      "layout": {
-        "text-font": [
-          "Noto Sans Regular"
-        ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
-        "text-size": {
-          "stops": [
-            [
-              3,
-              11
-            ],
-            [
-              7,
-              17
-            ]
-          ]
-        },
-        "text-transform": "uppercase",
-        "text-max-width": 6.25,
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-halo-blur": 1,
-        "text-color": "#334",
-        "text-halo-width": 2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
-      }
-    },
-    {
-      "id": "place-country-2",
-      "type": "symbol",
-      "source": "geolonia",
-      "source-layer": "place",
-      "filter": [
-        "all",
-        [
-          "==",
-          "class",
-          "country"
-        ],
-        [
-          "==",
-          "rank",
-          2
-        ],
-        [
-          "has",
-          "iso_a2"
-        ]
-      ],
-      "layout": {
-        "text-font": [
-          "Noto Sans Regular"
-        ],
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
-        "text-size": {
-          "stops": [
-            [
-              2,
-              11
-            ],
-            [
-              5,
-              17
-            ]
-          ]
-        },
-        "text-transform": "uppercase",
-        "text-max-width": 6.25,
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-halo-blur": 1,
-        "text-color": "#334",
-        "text-halo-width": 2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
-      }
-    },
-    {
-      "id": "place-country-1",
-      "type": "symbol",
-      "source": "geolonia",
-      "source-layer": "place",
-      "filter": [
-        "all",
-        [
-          "==",
-          "class",
-          "country"
-        ],
-        [
-          "==",
-          "rank",
-          1
-        ],
-        [
-          "has",
-          "iso_a2"
         ]
       ],
       "layout": {
@@ -3977,9 +2890,9 @@
       },
       "paint": {
         "text-halo-blur": 1,
-        "text-color": "#334",
+        "text-color": "#FFFFFF",
         "text-halo-width": 2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
+        "text-halo-color": "#000000"
       }
     },
     {
@@ -4005,37 +2918,11 @@
       },
       "paint": {
         "text-halo-blur": 1,
-        "text-color": "#334",
+        "text-color": "#FFFFFF",
         "text-halo-width": 2,
-        "text-halo-color": "rgba(255,255,255,0.8)"
-      }
-    },
-    {
-      "id": "japanese-prefectures-label",
-      "type": "symbol",
-      "source": "japanese-prefectures",
-      "minzoom": 5,
-      "maxzoom": 9,
-      "layout": {
-        "text-field": ["string", ["get", "name:ja"], ["get", "name"]],
-        "text-font": [
-          "Noto Sans Regular"
-        ],
-        "text-size": 16,
-        "text-anchor": "center",
-        "text-max-width": 10,
-        "text-offset": [
-          0,
-          0
-        ],
-        "text-allow-overlap": false
-      },
-      "paint": {
-        "text-color": "rgba(102, 102, 102, 1)",
-        "text-halo-color": "#ffffff",
-        "text-halo-width": 2
+        "text-halo-color": "#000000"
       }
     }
   ],
-  "id": "geolonia-basic"
+  "id": "geolonia-midnight"
 }
