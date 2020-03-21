@@ -29,7 +29,7 @@ const buildStyle = async (style) => {
   for (const lang in langs) {
     const styleJson = data.replace(/"{name}"/g, langs[lang])
     const file = path.join(styleDir, `${lang}.json`)
-    fs.writeFileSync(file, styleJson, 'utf8')
+    fs.writeFileSync(file, JSON.stringify(JSON.parse(styleJson), null, 0), 'utf8')
   }
 }
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:style": "node ./bin/build-styles.js",
+    "build:styles": "node ./bin/build-styles.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
