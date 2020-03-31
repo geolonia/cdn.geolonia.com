@@ -8,12 +8,7 @@ const mkdirp = require('mkdirp')
 const baseUrl = 'https://raw.githubusercontent.com/:style/master/style.json'
 const baseDir = path.join(__dirname, '../public/style')
 
-const styles = [
-  'geolonia/basic',
-  'geolonia/midnight',
-  'geolonia/red-planet',
-  'geolonia/notebook',
-]
+const styles = require(path.join(__dirname, '../styles.json'))
 
 const langs = {
   ja: '["string", ["get", "name:ja"], ["get", "name"]]',

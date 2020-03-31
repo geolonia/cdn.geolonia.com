@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build:styles && cp ./styles.json public/style/",
     "build:styles": "node ./bin/build-styles.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
