@@ -1,5 +1,6 @@
 [
   "geolonia/basic",
+  "geolonia/gsi",
   "geolonia/midnight",
   "geolonia/red-planet",
   "geolonia/notebook"
