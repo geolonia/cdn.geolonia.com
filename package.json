@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:styles && cp ./styles.json public/style/",
-    "build:styles": "node ./bin/build-styles.js",
+    "build": "npm run build:styles && npm run build:geocoder",
+    "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/",
+    "build:geocoder": "curl https://raw.githubusercontent.com/geolonia/community-geocoder/master/docs/api.js -o public/community-geocoder.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
