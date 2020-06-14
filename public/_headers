@@ -1,5 +1,5 @@
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
-  cache-control: max-age=2592000
+  cache-control: max-age=86400
   Access-Control-Allow-Origin: *
