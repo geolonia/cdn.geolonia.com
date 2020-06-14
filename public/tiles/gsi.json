@@ -7,6 +7,6 @@
   "id": "gsi-japan",
   "tilejson": "2.0.0",
   "tiles": [
-    "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pb"
+    "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf"
   ]
 }
