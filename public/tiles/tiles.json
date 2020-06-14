@@ -1,0 +1,11 @@
+{
+  "format": "pbf",
+  "name": "NaturalEarth",
+  "attribution": "<a href=\"https://www.naturalearthdata.com/\" target=\"_blank\">&copy; Natural Earth</a>",
+  "maxzoom": 7,
+  "id": "natural-earth",
+  "tilejson": "2.0.0",
+  "tiles": [
+    "https://cdn.geolonia.com/tiles/{z}/{x}/{y}.mvt"
+  ]
+}
