@@ -6,6 +6,6 @@
   "id": "natural-earth",
   "tilejson": "2.0.0",
   "tiles": [
-    "https://cdn.geolonia.com/tiles/{z}/{x}/{y}.mvt"
+    "https://cdn.geolonia.com/tiles/natural-earth/{z}/{x}/{y}.mvt"
   ]
 }
