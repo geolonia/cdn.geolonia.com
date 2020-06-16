@@ -1,7 +1,7 @@
 {
   "id": "japanese-prefectures",
   "name": "JapanesePrefectures",
-  "attribution": "<a href=\"https://geolonia.com/\" target=\"_blank\">&copy; Geolonia</a>",
+  "attribution": "<a href=\"https://geolonia.com/credit/\" target=\"_blank\">&copy; Geolonia</a>",
   "tilejson": "2.0.0",
   "tiles": ["https://cdn.geolonia.com/tiles/japanese-prefectures/{z}/{x}/{y}.mvt"],
   "format": "pbf",
