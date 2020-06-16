@@ -1,7 +1,7 @@
 {
   "id": "japanese-prefectures",
   "name": "JapanesePrefectures",
-  "attribution": "<a href=\"https://geolonia.com/\" target=\"_blank\">&copy; Geolonia</a> <a href=\"https://nlftp.mlit.go.jp/index.html\">国土交通省国土数値情報ダウンロードサイト</a>行政区域データ",
+  "attribution": "<a href=\"https://nlftp.mlit.go.jp/index.html\">国土数値情報（行政区域データ）</a>を加工して作成",
   "tilejson": "2.0.0",
   "tiles": [
     "https://cdn.geolonia.com/tiles/japanese-prefectures/{z}/{x}/{y}.mvt"
