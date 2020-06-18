@@ -8,7 +8,7 @@ mkdir -p ./.cache
 curl -L https://raw.githubusercontent.com/geolonia/prefecture-tiles/master/prefectures.geojson -o ./.cache/prefectures.geojson
 curl -L https://raw.githubusercontent.com/geolonia/prefecture-tiles/master/prefectural-capital.geojson -o ./.cache/admins.geojson
 
-tippecanoe -o ./.cache/prefectures.mbtiles -Z3 -z12 --drop-densest-as-needed --no-tile-compression ./.cache/admins.geojson ./.cache/prefectures.geojson
+tippecanoe -o ./.cache/prefectures.mbtiles -zg --drop-densest-as-needed --no-tile-compression ./.cache/admins.geojson ./.cache/prefectures.geojson
 
 # tile-join -f -o ./.cache/out.mbtiles ./.cache/prefectures.mbtiles ./.cache/admins.mbtiles
 mb-util --image_format=pbf ./.cache/prefectures.mbtiles ./.cache/tiles
