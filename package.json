@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:styles && npm run build:geocoder",
+    "build": "npm run build:styles && npm run build:geocoder && npm run build:embed",
     "build:tiles": "bash bin/build-tiles.sh",
     "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/",
+    "build:embed": "cp node_modules/@geolonia/embed/dist/embed.js ./public/embed.js",
     "build:geocoder": "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/geolonia/community-geocoder/master/docs/api.js -o public/community-geocoder.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/geolonia/cdn.geolonia.com#readme",
   "devDependencies": {
+    "@geolonia/embed": "^1.11.3",
     "mkdirp": "^1.0.3",
     "node-fetch": "^2.6.0"
   }
