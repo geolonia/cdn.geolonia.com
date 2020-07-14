@@ -3,3 +3,7 @@
   X-XSS-Protection: 1; mode=block
   cache-control: max-age=86400
   Access-Control-Allow-Origin: *
+
+/embed
+  cache-control: max-age=864000
+  content-type: application/javascript
