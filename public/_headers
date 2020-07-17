@@ -6,8 +6,8 @@
 
 /v1/embed
   cache-control: max-age=864000
-  content-type: application/javascript
+  content-type: application/javascript; charset=UTF-8
 
-/v1/dev
+/dev/embed
   cache-control: max-age=864000
-  content-type: application/javascript
+  content-type: application/javascript; charset=UTF-8
