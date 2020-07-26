@@ -1,13 +1,13 @@
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
-  cache-control: max-age=86400
+  Cache-Control: max-age=86400
   Access-Control-Allow-Origin: *
 
 /v1/embed
-  cache-control: max-age=864000
-  content-type: application/javascript; charset=UTF-8
+  Cache-Control: max-age=864000
+  Content-Type: application/javascript; charset=UTF-8
 
 /dev/embed
-  cache-control: max-age=864000
-  content-type: application/javascript; charset=UTF-8
+  Cache-Control: max-age=864000
+  Content-Type: application/javascript; charset=UTF-8
