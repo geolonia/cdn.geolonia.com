@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/geolonia/cdn.geolonia.com#readme",
   "devDependencies": {
-    "@geolonia/embed": "^1.11.3",
+    "@geolonia/embed": "^1.11.5",
     "mkdirp": "^1.0.3",
     "node-fetch": "^2.6.0"
   }
