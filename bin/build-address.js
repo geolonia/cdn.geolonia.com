@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 const parse = require("csv-parse");
-const basePath = `${__dirname}/../public/address/japan/`;
+const basePath = `${__dirname}/../public/address/japan`;
 const mkdirp = require("mkdirp");
 
 const main = async () => {
@@ -41,7 +41,8 @@ const main = async () => {
         cityMap[prefCode] = {};
       }
       if (!cityMap[prefCode][cityCode]) {
-        fs.mkdirSync(`${basePath}/${prefCode}/${cityCode}`);
+        // 大字町丁目ごとに個別の JSON を生成する場合、フォルダを作成する
+        // fs.mkdirSync(`${basePath}/${prefCode}/${cityCode}`);
         cityMap[prefCode][cityCode] = {
           都道府県コード: item["都道府県コード"],
           都道府県名: item["都道府県名"],
@@ -75,7 +76,7 @@ const main = async () => {
       (prefA, prefB) => prefA.都道府県コード - prefB.都道府県コード
     );
     // 都道府県レベルの情報の一覧の JSON を生成する
-    fs.writeFileSync(`${basePath}/all.json`, JSON.stringify(allPrefs));
+    fs.writeFileSync(`${basePath}.json`, JSON.stringify(allPrefs));
 
     // 都道府県レベルの情報の個別の JSON を生成する
     // allPrefs.forEach((pref) => {
@@ -90,7 +91,7 @@ const main = async () => {
       );
       // 市区町村レベルの情報の一覧の JSON を生成する
       fs.writeFileSync(
-        `${basePath}/${prefCode}/all.json`,
+        `${basePath}/${prefCode}.json`,
         JSON.stringify(allCities)
       );
 
@@ -114,7 +115,7 @@ const main = async () => {
         );
         // 大字町丁目のレベルの住所一覧の JSON を生成する
         fs.writeFileSync(
-          `${basePath}/${prefCode}/${cityCode}/all.json`,
+          `${basePath}/${prefCode}/${cityCode}.json`,
           JSON.stringify(allSmallAreas)
         );
 
