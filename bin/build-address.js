@@ -30,10 +30,10 @@ const main = async () => {
       if (!prefMap[prefCode]) {
         fs.mkdirSync(`${basePath}/${prefCode}`);
         prefMap[prefCode] = {
-          都道府県コード: item["都道府県コード"],
-          都道府県名: item["都道府県名"],
-          都道府県名カナ: item["都道府県名カナ"],
-          都道府県名ローマ字: item["都道府県名ローマ字"],
+          都道府県コード: item.都道府県コード,
+          都道府県名: item.都道府県名,
+          都道府県名カナ: item.都道府県名カナ,
+          都道府県名ローマ字: item.都道府県名ローマ字,
         };
       }
 
@@ -44,14 +44,14 @@ const main = async () => {
         // 大字町丁目ごとに個別の JSON を生成する場合、フォルダを作成する
         // fs.mkdirSync(`${basePath}/${prefCode}/${cityCode}`);
         cityMap[prefCode][cityCode] = {
-          都道府県コード: item["都道府県コード"],
-          都道府県名: item["都道府県名"],
-          都道府県名カナ: item["都道府県名カナ"],
-          都道府県名ローマ字: item["都道府県名ローマ字"],
-          市区町村コード: item["市区町村コード"],
-          市区町村名: item["市区町村名"],
-          市区町村名カナ: item["市区町村名カナ"],
-          市区町村名ローマ字: item["市区町村名ローマ字"],
+          都道府県コード: item.都道府県コード,
+          都道府県名: item.都道府県名,
+          都道府県名カナ: item.都道府県名カナ,
+          都道府県名ローマ字: item.都道府県名ローマ字,
+          市区町村コード: item.市区町村コード,
+          市区町村名: item.市区町村名,
+          市区町村名カナ: item.市区町村名カナ,
+          市区町村名ローマ字: item.市区町村名ローマ字,
         };
       }
 
@@ -113,14 +113,26 @@ const main = async () => {
           (smallAreaA, smallAreaB) =>
             smallAreaA.大字町丁目コード - smallAreaB.大字町丁目コード
         );
+        const transformedAllSmallAreas = allSmallAreas.map((smallArea) => {
+          const result = { ...smallArea };
+          result.緯度 = parseFloat(smallArea.緯度);
+          result.経度 = parseFloat(smallArea.経度);
+          if (Number.isNaN(result.緯度) || Number.isNaN(result.経度)) {
+            process.stderr.write(JSON.stringify(smallArea, null, 2));
+            process.stderr.write("不正な緯度経度の値です。\n");
+            process.exit(1)
+          } else {
+            return result;
+          }
+        });
         // 大字町丁目のレベルの住所一覧の JSON を生成する
         fs.writeFileSync(
           `${basePath}/${prefCode}/${cityCode}.json`,
-          JSON.stringify(allSmallAreas)
+          JSON.stringify(transformedAllSmallAreas)
         );
 
         // 大字町丁目レベルの個別の JSON を生成する
-        // allSmallAreas.forEach((smallArea) => {
+        // transformedAllSmallAreas.forEach((smallArea) => {
         //   const smallAreaCode = smallArea.大字町丁目コード;
         //   fs.writeFileSync(
         //     `${basePath}/${prefCode}/${cityCode}/${smallAreaCode}.json`,
@@ -133,3 +145,5 @@ const main = async () => {
 };
 
 main();
+process.stdout.write('Success!\n')
+process.exit(0)
