@@ -26,6 +26,7 @@ const main = async () => {
       }, {});
       const prefCode = item.都道府県コード;
       const cityCode = item.市区町村コード;
+      const smallAreaCode = item.大字町丁目コード
 
       if (!prefMap[prefCode]) {
         fs.mkdirSync(`${basePath}/${prefCode}`);
@@ -61,7 +62,7 @@ const main = async () => {
       if (!smallAreaMap[prefCode][cityCode]) {
         smallAreaMap[prefCode][cityCode] = {};
       }
-      smallAreaMap[prefCode][cityCode] = item;
+      smallAreaMap[prefCode][cityCode][smallAreaCode] = item;
     }
   });
 
@@ -108,7 +109,7 @@ const main = async () => {
     Object.keys(smallAreaMap).map((prefCode) => {
       const cityMap = smallAreaMap[prefCode];
       Object.keys(cityMap).map((cityCode) => {
-        const allSmallAreas = Object.values(smallAreaMap[prefCode]);
+        const allSmallAreas = Object.values(smallAreaMap[prefCode][cityCode]);
         allSmallAreas.sort(
           (smallAreaA, smallAreaB) =>
             smallAreaA.大字町丁目コード - smallAreaB.大字町丁目コード
@@ -145,5 +146,3 @@ const main = async () => {
 };
 
 main();
-process.stdout.write('Success!\n')
-process.exit(0)
