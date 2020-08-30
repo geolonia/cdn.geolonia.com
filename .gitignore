@@ -81,3 +81,9 @@ typings/
 
 # Serverless directories
 .serverless
+
+# tmp
+/data
+
+# others
+.DS_Store

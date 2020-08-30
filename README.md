@@ -9,3 +9,4 @@
 | `npm run build:style`    | Geolonia の style.json をビルド |
 | `npm run build:embed`    | Embed API をビルド |
 | `npm run build:geocoder` | geocoder API をビルド |
+| `npm run build:polygons` | 行政界ポリゴン API をビルド (`GDAL ogr2ogr` が必要) |
