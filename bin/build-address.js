@@ -26,7 +26,7 @@ const main = async () => {
       }, {});
       const prefCode = item.都道府県コード;
       const cityCode = item.市区町村コード;
-      const smallAreaCode = item.大字町丁目コード
+      const smallAreaCode = item.大字町丁目コード;
 
       if (!prefMap[prefCode]) {
         fs.mkdirSync(`${basePath}/${prefCode}`);
@@ -121,7 +121,7 @@ const main = async () => {
           if (Number.isNaN(result.緯度) || Number.isNaN(result.経度)) {
             process.stderr.write(JSON.stringify(smallArea, null, 2));
             process.stderr.write("不正な緯度経度の値です。\n");
-            process.exit(1)
+            process.exit(1);
           } else {
             return result;
           }
