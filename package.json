@@ -8,6 +8,7 @@
     "build:tiles": "bash bin/build-tiles.sh",
     "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/",
     "build:embed": "npm run update:embed && cp node_modules/@geolonia/embed/dist/embed.js ./public/v1/embed && cp node_modules/@geolonia/embed/dist/embed.js ./public/dev/embed",
+    "build:plugins": "bash bin/build-plugins.sh",
     "build:geocoder": "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/geolonia/community-geocoder/master/docs/api.js -o public/community-geocoder.js",
     "build:address": "rimraf public/address/japan && node bin/build-address.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -25,6 +26,7 @@
   "homepage": "https://github.com/geolonia/cdn.geolonia.com#readme",
   "devDependencies": {
     "@geolonia/embed": "^1.13.0",
+    "@geolonia/fixed-map-plugin": "0.0.4",
     "csv-parse": "^4.12.0",
     "mkdirp": "^1.0.3",
     "node-fetch": "^2.6.1",
