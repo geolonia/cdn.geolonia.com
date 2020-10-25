@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-rm -rf ./public/plugins/geolonia/fixed-map-plugin/latest
-mkdir -p ./public/plugins/geolonia/fixed-map-plugin/latest
-
+for STAGE in dev v1
+do
 cp \
-  ./node_modules/@geolonia/fixed-map-plugin/dist/* \
-  ./public/plugins/geolonia/fixed-map-plugin/latest/
+  ./node_modules/@geolonia/fixed-map-plugin/dist/fixed-map-geolonia-plugin.min.js \
+  ./public/$STAGE/fixed-map-plugin@latest
+done
