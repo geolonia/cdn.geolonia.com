@@ -60,5 +60,5 @@ GET /address/japan/{prefCode}/{cityCode}.json
   都道府県名ローマ字: string;
   経度: number;
   緯度: number;
-}
+}[]
 ```
