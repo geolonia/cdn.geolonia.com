@@ -3,6 +3,7 @@ const fs = require("fs");
 const parse = require("csv-parse");
 const basePath = `${__dirname}/../public/address/japan`;
 const mkdirp = require("mkdirp");
+const { removeGun } = require('./lib/address')
 
 const main = async () => {
   mkdirp.sync(basePath);
@@ -132,7 +133,7 @@ const main = async () => {
           }
         });
         const prefName = prefMap[prefCode].都道府県名
-        const cityName = cityMap[prefCode][cityCode].市区町村名
+        const cityName = removeGun(cityMap[prefCode][cityCode].市区町村名)
         // 大字町丁目のレベルの住所一覧の JSON を生成する
         fs.writeFileSync(
           `${basePath}/${prefCode}/${cityCode}.json`,
