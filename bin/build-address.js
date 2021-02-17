@@ -25,11 +25,13 @@ const main = async () => {
         return prev;
       }, {});
       const prefCode = item.都道府県コード;
+      const prefName = item.都道府県名;
       const cityCode = item.市区町村コード;
       const smallAreaCode = item.大字町丁目コード;
 
       if (!prefMap[prefCode]) {
         fs.mkdirSync(`${basePath}/${prefCode}`);
+        fs.mkdirSync(`${basePath}/${prefName}`);
         prefMap[prefCode] = {
           都道府県コード: item.都道府県コード,
           都道府県名: item.都道府県名,
@@ -90,11 +92,16 @@ const main = async () => {
       allCities.sort(
         (cityA, cityB) => cityA.市区町村コード - cityB.市区町村コード
       );
+      const prefName = prefMap[prefCode].都道府県名
       // 市区町村レベルの情報の一覧の JSON を生成する
       fs.writeFileSync(
         `${basePath}/${prefCode}.json`,
         JSON.stringify(allCities)
       );
+      fs.writeFileSync(
+        `${basePath}/${prefName}.json`,
+        JSON.stringify(allCities)
+      )
 
       // 市区町村レベルの情報の個別の JSON を生成する
       // allCities.forEach((city) => {
@@ -105,10 +112,8 @@ const main = async () => {
       //   );
       // });
     });
-
     Object.keys(smallAreaMap).map((prefCode) => {
-      const cityMap = smallAreaMap[prefCode];
-      Object.keys(cityMap).map((cityCode) => {
+      Object.keys(smallAreaMap[prefCode]).map((cityCode) => {
         const allSmallAreas = Object.values(smallAreaMap[prefCode][cityCode]);
         allSmallAreas.sort(
           (smallAreaA, smallAreaB) =>
@@ -126,9 +131,15 @@ const main = async () => {
             return result;
           }
         });
+        const prefName = prefMap[prefCode].都道府県名
+        const cityName = cityMap[prefCode][cityCode].市区町村名
         // 大字町丁目のレベルの住所一覧の JSON を生成する
         fs.writeFileSync(
           `${basePath}/${prefCode}/${cityCode}.json`,
+          JSON.stringify(transformedAllSmallAreas)
+        );
+        fs.writeFileSync(
+          `${basePath}/${prefName}/${cityName}.json`,
           JSON.stringify(transformedAllSmallAreas)
         );
 
