@@ -122,15 +122,10 @@ const main = async () => {
         );
         const transformedAllSmallAreas = allSmallAreas.map((smallArea) => {
           const result = { ...smallArea };
-          result.緯度 = parseFloat(smallArea.緯度);
-          result.経度 = parseFloat(smallArea.経度);
-          if (Number.isNaN(result.緯度) || Number.isNaN(result.経度)) {
-            process.stderr.write(JSON.stringify(smallArea, null, 2));
-            process.stderr.write("不正な緯度経度の値です。\n");
-            process.exit(1);
-          } else {
-            return result;
-          }
+          delete result.緯度
+          delete result.経度
+          delete result.大字町丁目コード
+          return result
         });
         const prefName = prefMap[prefCode].都道府県名
         const cityName = removeGun(cityMap[prefCode][cityCode].市区町村名)
