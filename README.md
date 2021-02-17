@@ -19,7 +19,24 @@
 
 ```
 GET /address/japan.json
+GET /address/japan/都道府県.json
 {
+  都道府県コード: string;
+  都道府県名: string;
+  都道府県名カナ: string;
+  都道府県名ローマ字: string;
+}[]
+```
+
+#### List all cities
+
+```
+GET /address/japan/市区町村.json
+{
+  市区町村コード: string;
+  市区町村名: string;
+  市区町村名カナ: string;
+  市区町村名ローマ字: string;
   都道府県コード: string;
   都道府県名: string;
   都道府県名カナ: string;

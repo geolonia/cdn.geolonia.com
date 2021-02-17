@@ -81,6 +81,7 @@ const main = async () => {
     );
     // 都道府県レベルの情報の一覧の JSON を生成する
     fs.writeFileSync(`${basePath}.json`, JSON.stringify(allPrefs));
+    fs.writeFileSync(`${basePath}/都道府県.json`, JSON.stringify(allPrefs));
 
     // 都道府県レベルの情報の個別の JSON を生成する
     // allPrefs.forEach((pref) => {
@@ -88,20 +89,20 @@ const main = async () => {
     //   fs.writeFileSync(`${basePath}/${prefCode}.json`, JSON.stringify(pref));
     // });
 
-    Object.keys(cityMap).map((prefCode) => {
-      const allCities = Object.values(cityMap[prefCode]);
-      allCities.sort(
+    const allCities = Object.keys(cityMap).flatMap((prefCode) => {
+      const allCitiesInAPref = Object.values(cityMap[prefCode]);
+      allCitiesInAPref.sort(
         (cityA, cityB) => cityA.市区町村コード - cityB.市区町村コード
       );
       const prefName = prefMap[prefCode].都道府県名
       // 市区町村レベルの情報の一覧の JSON を生成する
       fs.writeFileSync(
         `${basePath}/${prefCode}.json`,
-        JSON.stringify(allCities)
+        JSON.stringify(allCitiesInAPref)
       );
       fs.writeFileSync(
         `${basePath}/${prefName}.json`,
-        JSON.stringify(allCities)
+        JSON.stringify(allCitiesInAPref)
       )
 
       // 市区町村レベルの情報の個別の JSON を生成する
@@ -112,7 +113,11 @@ const main = async () => {
       //     JSON.stringify(city)
       //   );
       // });
+      return allCitiesInAPref
     });
+
+    fs.writeFileSync(`${basePath}/市区町村.json`, JSON.stringify(allCities));
+
     Object.keys(smallAreaMap).map((prefCode) => {
       Object.keys(smallAreaMap[prefCode]).map((cityCode) => {
         const allSmallAreas = Object.values(smallAreaMap[prefCode][cityCode]);
