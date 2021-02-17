@@ -19,7 +19,24 @@
 
 ```
 GET /address/japan.json
+GET /address/japan/都道府県.json
 {
+  都道府県コード: string;
+  都道府県名: string;
+  都道府県名カナ: string;
+  都道府県名ローマ字: string;
+}[]
+```
+
+#### List all cities
+
+```
+GET /address/japan/市区町村.json
+{
+  市区町村コード: string;
+  市区町村名: string;
+  市区町村名カナ: string;
+  市区町村名ローマ字: string;
   都道府県コード: string;
   都道府県名: string;
   都道府県名カナ: string;
@@ -30,7 +47,7 @@ GET /address/japan.json
 #### List cities
 
 ```
-GET /address/japan/{prefCode}.json
+GET /address/japan/{都道府県コード|都道府県名}.json
 {
   市区町村コード: string;
   市区町村名: string;
@@ -46,7 +63,8 @@ GET /address/japan/{prefCode}.json
 #### List small areas
 
 ```
-GET /address/japan/{prefCode}/{cityCode}.json
+GET /address/japan/{都道府県コード}/{市町村コード}.json
+GET /address/japan/{都道府県名}/{市町村名}.json
 {
   大字町丁目コード: string;
   大字町丁目名: string;

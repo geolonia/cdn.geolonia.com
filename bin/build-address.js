@@ -3,6 +3,7 @@ const fs = require("fs");
 const parse = require("csv-parse");
 const basePath = `${__dirname}/../public/address/japan`;
 const mkdirp = require("mkdirp");
+const { removeGun } = require('./lib/address')
 
 const main = async () => {
   mkdirp.sync(basePath);
@@ -25,16 +26,15 @@ const main = async () => {
         return prev;
       }, {});
       const prefCode = item.都道府県コード;
+      const prefName = item.都道府県名;
       const cityCode = item.市区町村コード;
       const smallAreaCode = item.大字町丁目コード;
 
       if (!prefMap[prefCode]) {
-        fs.mkdirSync(`${basePath}/${prefCode}`);
+        fs.mkdirSync(`${basePath}/${prefName}`);
         prefMap[prefCode] = {
-          都道府県コード: item.都道府県コード,
           都道府県名: item.都道府県名,
           都道府県名カナ: item.都道府県名カナ,
-          都道府県名ローマ字: item.都道府県名ローマ字,
         };
       }
 
@@ -45,14 +45,8 @@ const main = async () => {
         // 大字町丁目ごとに個別の JSON を生成する場合、フォルダを作成する
         // fs.mkdirSync(`${basePath}/${prefCode}/${cityCode}`);
         cityMap[prefCode][cityCode] = {
-          都道府県コード: item.都道府県コード,
           都道府県名: item.都道府県名,
-          都道府県名カナ: item.都道府県名カナ,
-          都道府県名ローマ字: item.都道府県名ローマ字,
-          市区町村コード: item.市区町村コード,
           市区町村名: item.市区町村名,
-          市区町村名カナ: item.市区町村名カナ,
-          市区町村名ローマ字: item.市区町村名ローマ字,
         };
       }
 
@@ -73,73 +67,42 @@ const main = async () => {
 
   parser.on("end", () => {
     const allPrefs = Object.values(prefMap);
-    allPrefs.sort(
-      (prefA, prefB) => prefA.都道府県コード - prefB.都道府県コード
-    );
-    // 都道府県レベルの情報の一覧の JSON を生成する
-    fs.writeFileSync(`${basePath}.json`, JSON.stringify(allPrefs));
+    const prefs = []
+    for (let i = 0; i < allPrefs.length; i++) {
+      prefs.push(allPrefs[i].都道府県名)
+    }
+    fs.writeFileSync(`${basePath}.json`, JSON.stringify(prefs));
 
-    // 都道府県レベルの情報の個別の JSON を生成する
-    // allPrefs.forEach((pref) => {
-    //   const prefCode = pref.都道府県コード;
-    //   fs.writeFileSync(`${basePath}/${prefCode}.json`, JSON.stringify(pref));
-    // });
-
-    Object.keys(cityMap).map((prefCode) => {
-      const allCities = Object.values(cityMap[prefCode]);
-      allCities.sort(
-        (cityA, cityB) => cityA.市区町村コード - cityB.市区町村コード
-      );
-      // 市区町村レベルの情報の一覧の JSON を生成する
+    const allCities = Object.keys(cityMap).flatMap((prefCode) => {
+      const allCitiesInAPref = Object.values(cityMap[prefCode]);
+      const prefName = prefMap[prefCode].都道府県名
+      const cities = []
+      for (let i = 0; i < allCitiesInAPref.length; i++) {
+        cities.push(allCitiesInAPref[i].市区町村名)
+      }
       fs.writeFileSync(
-        `${basePath}/${prefCode}.json`,
-        JSON.stringify(allCities)
-      );
+        `${basePath}/${prefName}.json`,
+        JSON.stringify(cities)
+      )
 
-      // 市区町村レベルの情報の個別の JSON を生成する
-      // allCities.forEach((city) => {
-      //   const cityCode = city.市区町村コード;
-      //   fs.writeFileSync(
-      //     `${basePath}/${prefCode}/${cityCode}.json`,
-      //     JSON.stringify(city)
-      //   );
-      // });
+      return allCitiesInAPref
     });
 
+    fs.writeFileSync(`${basePath}/市区町村.json`, JSON.stringify(allCities));
+
     Object.keys(smallAreaMap).map((prefCode) => {
-      const cityMap = smallAreaMap[prefCode];
-      Object.keys(cityMap).map((cityCode) => {
+      Object.keys(smallAreaMap[prefCode]).map((cityCode) => {
         const allSmallAreas = Object.values(smallAreaMap[prefCode][cityCode]);
-        allSmallAreas.sort(
-          (smallAreaA, smallAreaB) =>
-            smallAreaA.大字町丁目コード - smallAreaB.大字町丁目コード
-        );
         const transformedAllSmallAreas = allSmallAreas.map((smallArea) => {
           const result = { ...smallArea };
-          result.緯度 = parseFloat(smallArea.緯度);
-          result.経度 = parseFloat(smallArea.経度);
-          if (Number.isNaN(result.緯度) || Number.isNaN(result.経度)) {
-            process.stderr.write(JSON.stringify(smallArea, null, 2));
-            process.stderr.write("不正な緯度経度の値です。\n");
-            process.exit(1);
-          } else {
-            return result;
-          }
+          return result.大字町丁目名
         });
-        // 大字町丁目のレベルの住所一覧の JSON を生成する
+        const prefName = prefMap[prefCode].都道府県名
+        const cityName = removeGun(cityMap[prefCode][cityCode].市区町村名)
         fs.writeFileSync(
-          `${basePath}/${prefCode}/${cityCode}.json`,
+          `${basePath}/${prefName}/${cityName}.json`,
           JSON.stringify(transformedAllSmallAreas)
         );
-
-        // 大字町丁目レベルの個別の JSON を生成する
-        // transformedAllSmallAreas.forEach((smallArea) => {
-        //   const smallAreaCode = smallArea.大字町丁目コード;
-        //   fs.writeFileSync(
-        //     `${basePath}/${prefCode}/${cityCode}/${smallAreaCode}.json`,
-        //     JSON.stringify(smallArea)
-        //   );
-        // });
       });
     });
   });
