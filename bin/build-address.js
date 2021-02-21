@@ -3,7 +3,6 @@ const fs = require("fs");
 const parse = require("csv-parse");
 const basePath = `${__dirname}/../public/address/japan`;
 const mkdirp = require("mkdirp");
-const { removeGun } = require('./lib/address')
 const path = require('path')
 
 const main = async () => {
