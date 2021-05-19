@@ -1,0 +1,11 @@
+{
+  "format": "pbf",
+  "name": "Oceanus",
+  "attribution": "<a href=\"https://geolonia.com/credit/\" target=\"_blank\">&copy; Geolonia</a>",
+  "maxzoom": 7,
+  "id": "oceanus",
+  "tilejson": "2.0.0",
+  "tiles": [
+    "https://cdn.geolonia.com/tiles/oceanus/{z}/{x}/{y}.mvt"
+  ]
+}
