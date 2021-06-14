@@ -11,3 +11,12 @@
 | `npm run build:plugins`  | Embed API のプラグインをビルド |
 | `npm run build:geocoder` | geocoder API をビルド |
 
+## tiles hosted here
+
+```
+$ bin/build-tiles-from-mbtiles.sh <path-to-mbtiles> <identifier>
+```
+
+`<identifier>` refers to the directory name in `public/tiles/<identifier>/`.
+
+Requirements: mb-util (tippecanoe), find, gunzip.
