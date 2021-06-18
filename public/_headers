@@ -11,3 +11,12 @@
 /dev/embed
   Cache-Control: max-age=864000
   Content-Type: application/javascript; charset=UTF-8
+
+/tiles/oceanus/:z/:x/:y.mvt
+  Cache-Control: public, max-age=604800, immutable
+  Access-Control-Allow-Origin: *
+  Content-Type: application/x-protobuf
+
+/tiles/oceanus.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
