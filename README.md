@@ -19,4 +19,4 @@ $ bin/build-tiles-from-mbtiles.sh <path-to-mbtiles> <identifier>
 
 `<identifier>` refers to the directory name in `public/tiles/<identifier>/`.
 
-Requirements: mb-util (tippecanoe), find, gunzip.
+Requirements: mb-util (tippecanoe), find, gunzip, GNU coreutils (`brew install coreutils`).
