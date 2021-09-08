@@ -2,9 +2,12 @@
   "format": "pbf",
   "name": "Oceanus",
   "attribution": "<a href=\"https://geolonia.com/credit/\" target=\"_blank\">&copy; Geolonia</a>",
+  "minzoom": 0,
   "maxzoom": 7,
+  "center": [ 130.781250, 33.129653, 7 ],
+  "bounds": [ -180.000000, -85.051129, 180.000000, 85.051129 ],
   "id": "oceanus",
-  "tilejson": "2.0.0",
+  "tilejson": "2.2.0",
   "tiles": [
     "https://cdn.geolonia.com/tiles/oceanus/{z}/{x}/{y}.mvt"
   ]

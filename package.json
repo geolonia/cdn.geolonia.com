@@ -18,14 +18,15 @@
     "type": "git",
     "url": "git+https://github.com/geolonia/cdn.geolonia.com.git"
   },
-  "author": "",
+  "private": true,
+  "author": "Geolonia (https://geolonia.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/geolonia/cdn.geolonia.com/issues"
   },
   "homepage": "https://github.com/geolonia/cdn.geolonia.com#readme",
   "devDependencies": {
-    "@geolonia/embed": "^1.14.14",
+    "@geolonia/embed": "^1.18.1",
     "@geolonia/fixed-map-plugin": "0.0.4",
     "@geolonia/view-with-google-plugin": "0.0.2",
     "csv-parse": "^4.12.0",
