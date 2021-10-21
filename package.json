@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:styles && npm run build:geocoder && npm run build:embed && npm run build:address",
-    "build:tiles": "bash bin/build-tiles.sh",
     "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/",
     "build:embed": "npm run update:embed && cp node_modules/@geolonia/embed/dist/embed.js ./public/v1/embed && cp node_modules/@geolonia/embed/dist/embed.js ./public/dev/embed",
     "build:plugins": "bash bin/build-plugins.sh",
