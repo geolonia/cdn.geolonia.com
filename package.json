@@ -7,15 +7,11 @@
     "build": "npm run build:styles && npm run build:geocoder && npm run build:embed && npm run build:address",
     "build:tiles": "bash bin/build-tiles.sh",
     "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/",
-    "build:embed": "npm run build:embed:dev",
-    "build:embed:v1": "npm run update:embed && cp node_modules/@geolonia/embed/dist/* ./public/v1/ && cp ./public/v1/embed.js ./public/v1/embed",
-    "build:embed:dev": "npm run update:embed:next && cp node_modules/@geolonia/embed/dist/* ./public/dev/ && cp ./public/dev/embed.js ./public/dev/embed",
-    "build:plugins": "bash bin/build-plugins.sh",
+    "build:embed": "bash ./bin/build-embed.sh",
+    "build:plugins": "bash ./bin/build-plugins.sh",
     "build:geocoder": "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/geolonia/community-geocoder/master/docs/api.js -o public/community-geocoder.js",
     "build:address": "rimraf public/address/japan && node bin/build-address.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "update:embed": "npm remove @geolonia/embed && npm install @geolonia/embed -D",
-    "update:embed:next": "npm remove @geolonia/embed && npm install @geolonia/embed@next -D"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -30,6 +26,7 @@
   "homepage": "https://github.com/geolonia/cdn.geolonia.com#readme",
   "devDependencies": {
     "@geolonia/embed": "^1.18.1",
+    "@geolonia/embed2": "npm:@geolonia/embed@^2.0.0-pre.2",
     "@geolonia/fixed-map-plugin": "0.0.4",
     "@geolonia/view-with-google-plugin": "0.0.2",
     "csv-parse": "^4.12.0",
