@@ -9,7 +9,7 @@
 | `npm run build:styles`    | Geolonia の style.json をビルド |
 | `npm run build:embed`    | Embed API をビルド |
 | `npm run build:plugins`  | Embed API のプラグインをビルド |
-| `npm run build:geocoder` | geocoder API をビルド |
+| `npm run build:geocoder` | geocoder API ([Community Geocoder](https://github.com/geolonia/community-geocoder)) をビルド |
 
 ## tiles hosted here
 
