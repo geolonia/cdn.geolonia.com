@@ -11,6 +11,18 @@
 | `npm run build:plugins`  | Embed API のプラグインをビルド |
 | `npm run build:geocoder` | geocoder API ([Community Geocoder](https://github.com/geolonia/community-geocoder)) をビルド |
 
+### スタイルの国際化について
+
+`npm run build:styles` の実行の際に一部のラベルに関するプロパティが変更され en.json と ja.json が生成されます。国際化の対象にしたいレイヤーについては以下のレイアウトプロパティを指定してください。
+
+```json
+{
+  "layout": {
+    "text-field": "{name}"
+  }
+}
+```
+
 ## tiles hosted here
 
 ```
