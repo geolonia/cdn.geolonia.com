@@ -16,6 +16,7 @@ const langs = {
 }
 
 const buildStyle = async (style) => {
+  style = style.replace('geolonia/', '')
   const url = baseUrl.replace(':style', style)
   const response = await fetch(url)
   const data = await response.text()
