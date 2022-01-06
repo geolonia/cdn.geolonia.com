@@ -5,7 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 
-const baseUrl = 'https://raw.githubusercontent.com/:style/master/style.json'
+const baseUrl = 'https://raw.githubusercontent.com/geoloniamaps/:style/gh-pages/style.json'
 const baseDir = path.join(__dirname, '../public/style')
 
 const styles = require(path.join(__dirname, '../styles.json'))
@@ -19,7 +19,7 @@ const buildStyle = async (style) => {
   const url = baseUrl.replace(':style', style)
   const response = await fetch(url)
   const data = await response.text()
-  const styleDir = path.join(baseDir, style)
+  const styleDir = path.join(baseDir, 'geolonia', style)
   mkdirp.sync(styleDir)
   for (const lang in langs) {
     const styleJson = data.replace(/"{name}"/g, langs[lang])

@@ -1,8 +1,8 @@
 [
-  "geolonia/basic",
-  "geolonia/gsi",
-  "geolonia/midnight",
-  "geolonia/red-planet",
-  "geolonia/notebook",
-  "geolonia/homework"
+  "basic",
+  "gsi",
+  "midnight",
+  "red-planet",
+  "notebook",
+  "homework"
 ]
