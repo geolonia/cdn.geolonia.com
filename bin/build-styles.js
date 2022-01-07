@@ -16,7 +16,10 @@ const langs = {
 }
 
 const buildStyle = async (style) => {
+  // スタイルをホストしている GitHub Organization を geolonia → geoloniamaps に変更したので下の処理を追加。
+  // https://github.com/geolonia/cdn.geolonia.com/pull/37
   style = style.replace('geolonia/', '')
+
   const url = baseUrl.replace(':style', style)
   const response = await fetch(url)
   const data = await response.text()
