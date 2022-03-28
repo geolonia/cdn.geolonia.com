@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/geolonia/cdn.geolonia.com#readme",
   "devDependencies": {
-    "@geolonia/embed": "^1.19.1",
-    "@geolonia/embed2": "npm:@geolonia/embed@^2.0.0-pre.4",
+    "@geolonia/embed": "^2.0.0",
+    "@geolonia/embed2": "npm:@geolonia/embed@^2.0.0-pre.5",
     "@geolonia/fixed-map-plugin": "0.0.4",
     "@geolonia/view-with-google-plugin": "0.0.2",
     "csv-parse": "^4.12.0",
