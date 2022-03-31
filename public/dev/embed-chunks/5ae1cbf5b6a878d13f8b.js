@@ -1,0 +1,1 @@
+(self.webpackChunk_geolonia_embed=self.webpackChunk_geolonia_embed||[]).push([[841],{5347:()=>{},1777:()=>{},4017:()=>{},9905:()=>{},4604:()=>{}}]);
