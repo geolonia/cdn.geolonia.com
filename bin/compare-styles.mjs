@@ -46,8 +46,11 @@ const main = async () => {
       const section = `### ${styleId}.json\n\n\`\`\`diff\n${diffLines.join('\n')}\n\`\`\``
       diffLines.length > 0 && sections.push(section)
   }
-
-  process.stdout.write(`## Style Diff\n\n${sections.join('\n')}\n`)
+  if(sections.length > 0) {
+    process.stdout.write(`## Style Diff\n\n${sections.join('\n')}\n`)
+  } else {
+    process.stdout.write('No style diffs.')
+  }
 }
 
 main()
