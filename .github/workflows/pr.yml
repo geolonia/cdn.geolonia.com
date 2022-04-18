@@ -31,6 +31,9 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref }}
         run: |
           COMMENT=$(node bin/compare-styles.mjs $BASE_BRANCH $BRANCH_NAME)
+          COMMENT="${COMMENT//'%'/'%25'}"
+          COMMENT="${COMMENT//$'\n'/'%0A'}"
+          COMMENT="${COMMENT//$'\r'/'%0D'}"
           echo ::set-output name=comment::$COMMENT
 
       - name: Post comment

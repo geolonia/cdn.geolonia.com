@@ -26,14 +26,6 @@ const getStyleMap = async (branch) => {
 
 const sections = []
 
-const format = (styleId, diffLines) => `### ${styleId}
-
-\`\`\`diff
-${diffLines.join('\n')}
-\`\`\`
-
-`
-
 const main = async () => {
   const styleMap1 = await getStyleMap(BRANCH1)
   const styleMap2 = await getStyleMap(BRANCH2)
@@ -54,14 +46,10 @@ const main = async () => {
           return ''
         }
       }).filter(x => x)
-      diffLines.length > 0 && sections.push(format(styleId, diffLines))
+      diffLines.length > 0 && sections.push(`### ${styleId}\n\n\`\`\`diff\n${diffLines.join('\n')}\n\`\`\`\n\n`)
   }
   if(sections.length > 0) {
-    process.stdout.write(`## Style Diff
-
-
-
-${sections.join('\n\n')}`)
+    process.stdout.write(`## Style Diff\n\n${sections.join('\n')}`)
   } else {
     process.stdout.write('No style diffs.')
   }
