@@ -43,7 +43,7 @@ const main = async () => {
           return ''
         }
       }).filter(x => x)
-      const section = `### ${styleId}.json\n\n\`\`\`diff\n${diffLines.join('\n')}\n\`\`\``
+      const section = `### ${styleId}.json\\n\\n\`\`\`diff\\n${diffLines.join('\\n')}\\n\`\`\``
       diffLines.length > 0 && sections.push(section)
   }
   if(sections.length > 0) {
