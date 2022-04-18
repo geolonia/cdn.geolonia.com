@@ -59,6 +59,8 @@ const main = async () => {
   if(sections.length > 0) {
     process.stdout.write(`## Style Diff
 
+
+
 ${sections.join('\n\n')}`)
   } else {
     process.stdout.write('No style diffs.')
