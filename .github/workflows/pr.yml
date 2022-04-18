@@ -24,7 +24,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn
-      - name: compare style diff
+
+      - id: create_comment_diff
         env:
           BASE_BRANCH: ${{ github.base_ref }}
           BRANCH_NAME: ${{ github.head_ref }}
@@ -36,7 +37,7 @@ jobs:
         uses: actions/github-script@v4
         if: github.event_name == 'pull_request'
         env:
-          POSTING_COMMENT_BODY: ${{ steps.compare_bundle_size.outputs.comment }}
+          POSTING_COMMENT_BODY: ${{ steps.create_comment_diff.outputs.comment }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
