@@ -52,14 +52,14 @@ const main = async () => {
           return ''
         }
       }).filter(x => x)
-      diffLines.length > 0 && sections.push(`### ${styleId}\n\n\`\`\`diff\n${diffLines.join('\n')}\n\`\`\`\n\n`)
+      diffLines.length > 0 && sections.push(`### ${styleId}.json\n\n\`\`\`diff\n${diffLines.join('\n')}\n\`\`\`\n\n`)
   }
   if(sections.length > 0) {
     process.stdout.write(`## Style Diff\n\n${sections.join('\n')}`)
   } else {
     process.stdout.write('No style diffs.')
   }
-  process.exit(1)
+  process.exit(0)
 }
 
 try {
