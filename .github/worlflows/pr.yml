@@ -1,0 +1,27 @@
+name: comment_on_pr
+
+on:
+  pull_request:
+    types: [created, synchronize]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: compare style diff
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+        run: |
+          COMMENT=$(node bin/compare-styles.sh $BASE_BRANCH ${GITHUB_REF#refs/heads/})
+          echo ::set-output name=comment::$COMMENT
+
+      - name: Post comment
+        uses: actions/github-script@v4
+        if: github.event_name == 'pull_request'
+        env:
+          POSTING_COMMENT_BODY: ${{ steps.compare_bundle_size.outputs.comment }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
+            github.issues.createComment({ issue_number, owner, repo, body: process.env.POSTING_COMMENT_BODY });
