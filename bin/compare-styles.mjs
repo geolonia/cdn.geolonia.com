@@ -2,7 +2,10 @@
 
 import fetch from "node-fetch"
 import fs from 'fs/promises'
-import * as Diff from 'diff'
+import child_process from "child_process"
+import util from 'util'
+
+const exec = util.promisify(child_process.exec)
 
 const [, , BRANCH1, BRANCH2] = process.argv
 const URL_BASE = "https://raw.githubusercontent.com/geolonia/cdn.geolonia.com"
@@ -30,8 +33,6 @@ const getStyleMap = async (branch) => {
   return styleMap
 }
 
-const sections = []
-
 const main = async () => {
   const styleMap1 = await getStyleMap(BRANCH1)
   const styleMap2 = await getStyleMap(BRANCH2)
@@ -40,25 +41,26 @@ const main = async () => {
     ...Object.keys(styleMap2),
   ])]
 
+  let comment = `## Style Diff\n\n`
+
   for (const styleId of styleIds) {
     const style1 = styleMap1[styleId]
     const style2 = styleMap2[styleId]
-    const diffLines = Diff.diffLines(style1, style2, { ignoreWhitespace: true })
-      .map(({ added, removed, value }) => {
-        if(added || removed) {
-          const operator = added ? '+' : '-'
-          return value.split('\n').filter(x => x).map(line => `${operator} ${line}`).join('\n')
-        } else {
-          return ''
-        }
-      }).filter(x => x)
-      diffLines.length > 0 && sections.push(`### ${styleId}.json\n\n\`\`\`diff\n${diffLines.join('\n')}\n\`\`\`\n\n`)
+    comment += `### ${styleId}.json\n\n`
+    if(!style1) {
+
+    } else if(!style2) {
+
+    } else {
+      const { stdout: diff } = await exec(`diff <(echo '${style1}') <(echo '${style2}')`)
+      if(diff) {
+        comment += `\`\`\`diff\n${diff}\n\`\`\`\n\n`
+      } else {
+        comment += 'No diffs.\n\n'
+      }
+    }
   }
-  if(sections.length > 0) {
-    process.stdout.write(`## Style Diff\n\n${sections.join('\n')}`)
-  } else {
-    process.stdout.write('No style diffs.')
-  }
+  process.stdout.write(comment)
   process.exit(0)
 }
 

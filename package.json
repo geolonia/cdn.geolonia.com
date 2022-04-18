@@ -30,7 +30,6 @@
     "@geolonia/fixed-map-plugin": "0.0.4",
     "@geolonia/view-with-google-plugin": "0.0.2",
     "csv-parse": "^4.12.0",
-    "diff": "^5.0.0",
     "mkdirp": "^1.0.3",
     "node-fetch": "^2.6.1",
     "rimraf": "^3.0.2"
