@@ -12,7 +12,7 @@ jobs:
         env:
           BASE_BRANCH: ${{ github.base_ref }}
         run: |
-          COMMENT=$(node bin/compare-styles.js $BASE_BRANCH ${GITHUB_REF#refs/heads/})
+          COMMENT=$(node bin/compare-styles.mjs $BASE_BRANCH ${GITHUB_REF#refs/heads/})
           echo ::set-output name=comment::$COMMENT
 
       - name: Post comment
