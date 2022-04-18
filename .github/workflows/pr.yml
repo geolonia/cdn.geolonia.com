@@ -27,9 +27,9 @@ jobs:
       - name: compare style diff
         env:
           BASE_BRANCH: ${{ github.base_ref }}
+          BRANCH_NAME: ${{ github.head_ref }}
         run: |
-          echo "$BASE_BRANCH vs. ${GITHUB_REF#refs/heads/}"
-          COMMENT=$(node bin/compare-styles.mjs $BASE_BRANCH ${GITHUB_REF#refs/heads/})
+          COMMENT=$(node bin/compare-styles.mjs $BASE_BRANCH $BRANCH_NAME)
           echo ::set-output name=comment::$COMMENT
 
       - name: Post comment
