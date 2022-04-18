@@ -10,8 +10,8 @@ const LANGS = ['en', 'ja']
 
 const getJSON = async (branchName, path) => {
   if(branchName === process.env.BRANCH_NAME) {
-    const buf = await fs.readFile(`../public/style/${path}`)
-    return buf.toJSON()
+    const buf = await fs.readFile(`./public/style/${path}`)
+    return JSON.parse(buf.toString('utf-8'))
   } else {
     const url = `${URL_BASE}/${branchName}/public/style/${path}`
     const resp = await fetch(url)
@@ -59,6 +59,12 @@ const main = async () => {
   } else {
     process.stdout.write('No style diffs.')
   }
+  process.exit(1)
 }
 
-main()
+try {
+  main()
+} catch (error) {
+  console.error(error)
+  process.exit(1)
+}
