@@ -1,6 +1,7 @@
 // スタイルを比較する
 
 import fetch from "node-fetch"
+import fs from 'fs/promises'
 import * as Diff from 'diff'
 
 const [, , BRANCH1, BRANCH2] = process.argv
@@ -8,9 +9,14 @@ const URL_BASE = "https://raw.githubusercontent.com/geolonia/cdn.geolonia.com"
 const LANGS = ['en', 'ja']
 
 const getJSON = async (branchName, path) => {
-  const url = `${URL_BASE}/${branchName}/public/style/${path}`
-  const resp = await fetch(url)
-  return resp.json()
+  if(branchName === process.env.BRANCH_NAME) {
+    const buf = await fs.readFile(`public/style/${path}`)
+    return buf.toJSON()
+  } else {
+    const url = `${URL_BASE}/${branchName}/public/style/${path}`
+    const resp = await fetch(url)
+    return resp.json()
+  }
 }
 
 const getStyleMap = async (branch) => {
