@@ -10,7 +10,7 @@ const LANGS = ['en', 'ja']
 
 const getJSON = async (branchName, path) => {
   if(branchName === process.env.BRANCH_NAME) {
-    const buf = await fs.readFile(`public/style/${path}`)
+    const buf = await fs.readFile(`../public/style/${path}`)
     return buf.toJSON()
   } else {
     const url = `${URL_BASE}/${branchName}/public/style/${path}`
