@@ -1,0 +1,50 @@
+name: comment_on_pr
+
+on:
+  pull_request:
+    types: [created, synchronize]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn
+
+      - id: create_comment_diff
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          COMMENT=$(node bin/compare-styles.mjs $BASE_BRANCH $BRANCH_NAME)
+          COMMENT="${COMMENT//'%'/'%25'}"
+          COMMENT="${COMMENT//$'\n'/'%0A'}"
+          COMMENT="${COMMENT//$'\r'/'%0D'}"
+          echo ::set-output name=comment::$COMMENT
+
+      - name: Post comment
+        uses: actions/github-script@v4
+        if: github.event_name == 'pull_request'
+        env:
+          POSTING_COMMENT_BODY: ${{ steps.create_comment_diff.outputs.comment }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
+            process.env.POSTING_COMMENT_BODY ?
+              github.issues.createComment({ issue_number, owner, repo, body: process.env.POSTING_COMMENT_BODY }) :
+              console.log('No diffs.');
