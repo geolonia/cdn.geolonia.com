@@ -69,7 +69,7 @@ const main = async () => {
   }
 
   if(comment) {
-    comment = `## Style Diff\n\n` + comment
+    comment = `### Style update summary\n\n` + comment
   }
 
   process.stdout.write(comment)
