@@ -1,5 +1,3 @@
-// スタイルを比較する
-
 import fetch from "node-fetch"
 import fs from 'fs/promises'
 import child_process from "child_process"
@@ -21,52 +19,59 @@ const getJSON = async (branchName, path) => {
   }
 }
 
-const getStyleLocation = (branchName, path) => {
+const getStyleCatCommand = (branchName, path) => {
   if(branchName === process.env.BRANCH_NAME) {
-    return `<(cat "./public/style/${path}" | jq)`
+    return `cat "./public/style/${path}"`
   } else {
-    return `<(curl -sL "${URL_BASE}/${branchName}/public/style/${path}" | jq)`
+    return `curl -sL "${URL_BASE}/${branchName}/public/style/${path}"`
   }
 }
 
-const getStyleLocationMap = async (branch) => {
+const getStyleCatCommandMap = async (branch) => {
   const styleIds = await getJSON(branch, 'styles.json')
   const i18nizedStyleIds = styleIds.flatMap(styleId => LANGS.map(lang => `${styleId}/${lang}`))
-  const styleLocations = await Promise.all(i18nizedStyleIds.map(styleId => getStyleLocation(branch, `${styleId}.json`)))
+  const styleCatCommands = await Promise.all(i18nizedStyleIds.map(styleId => getStyleCatCommand(branch, `${styleId}.json`)))
   const styleMap = i18nizedStyleIds.reduce((prev, styleId, index) => {
-    prev[styleId] = styleLocations[index]
+    prev[styleId] = styleCatCommands[index]
     return prev
   }, {})
   return styleMap
 }
 
 const main = async () => {
-  const [styleLocationMap1, styleLocationMap2] = await Promise.all([getStyleLocationMap(BRANCH1), getStyleLocationMap(BRANCH2)])
+  const [styleCatCommandMap1, styleCatCommandMap2] = await Promise.all([getStyleCatCommandMap(BRANCH1), getStyleCatCommandMap(BRANCH2)])
   const styleIds = [...new Set([
-    ...Object.keys(styleLocationMap1),
-    ...Object.keys(styleLocationMap2),
+    ...Object.keys(styleCatCommandMap1),
+    ...Object.keys(styleCatCommandMap2),
   ])]
 
-  let comment = `## Style Diff\n\n`
+  let comment = ''
 
   for (const styleId of styleIds) {
-    const styleLocation1 = styleLocationMap1[styleId]
-    const styleLocation2 = styleLocationMap2[styleId]
-    comment += `### ${styleId}.json\n\n`
-    if(!styleLocation1) {
-      comment += 'Created.\n\n'
-    } else if(!styleLocation2) {
-      comment += 'Deleted.\n\n'
-    } else {
-      // supress diff exit code 1
-      const { stdout: diff } = await exec(`diff ${styleLocation1} ${styleLocation2} || true`, { shell: '/bin/bash' })
-      if(diff) {
-        comment += `\`\`\`diff\n${diff}\n\`\`\`\n\n`
-      } else {
-        comment += 'No diffs.\n\n'
-      }
+    const styleCatCommand1 = styleCatCommandMap1[styleId]
+    const styleCatCommand2 = styleCatCommandMap2[styleId]
+
+    const { stdout: style1 } = await exec(`${styleCatCommand1} || true`)
+    const { stdout: style2 } = await exec(`${styleCatCommand2} || true`)
+
+    // diff returns exit code 1 and this should be supressed
+    const { stdout: diff } = await exec(`diff <(${styleCatCommand1} | jq) <(${styleCatCommand2} | jq) || true`, { shell: '/bin/bash' })
+    const status = (style1 && style2 && diff) ? ':white_check_mark: updated' : (
+      (style1 && !style2 && diff) ? ':x: deleted' : (
+        (!style1 && style2 && diff) ? ':new: created' : 'no diffs.'
+      )
+    )
+
+    if(status !== 'no diffs.') {
+      comment += `<details><summary><em>${status}</em> <strong>${styleId}.json</strong></summary>\n\n`
+      comment += `\`\`\`diff\n${diff}\n\`\`\`\n</details>\n\n`
     }
   }
+
+  if(comment) {
+    comment = `## Style Diff\n\n` + comment
+  }
+
   process.stdout.write(comment)
   process.exit(0)
 }
