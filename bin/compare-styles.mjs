@@ -51,7 +51,7 @@ const main = async () => {
     } else if(!style2) {
       comment += 'Deleted.\n\n'
     } else {
-      const { stdout: diff } = await exec(`diff <(echo '${style1}') <(echo '${style2}')`, { shell: '/bin/bash' })
+      const { stdout: diff } = await exec(`diff <(echo "${style1}") <(echo "${style2}")`, { shell: '/bin/bash' })
       if(diff) {
         comment += `\`\`\`diff\n${diff}\n\`\`\`\n\n`
       } else {
