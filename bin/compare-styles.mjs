@@ -70,10 +70,10 @@ const main = async () => {
 
     if(status) {
       if(status === 'updated') {
-        comment += `- <details><summary><em>${LABELS[status]}</em> <strong>${styleId}.json</strong></summary>\n\n`
-        comment += `    \`\`\`diff\n${diff.split('\n').map(l => `    ${l}`).join('\n')}\n    \`\`\`\n</details>\n\n`
+        comment += `<details><summary><em>${LABELS[status]}</em> <strong>${styleId}.json</strong></summary>\n\n`
+        comment += `\`\`\`diff\n${diff.split('\n').map(l => `${l}`).join('\n')}\n\`\`\`\n</details>\n\n`
       } else {
-        comment += `- <em>${LABELS[status]}</em> <strong>${styleId}.json</strong>\n\n`
+        comment += `<em>${LABELS[status]}</em> <strong>${styleId}.json</strong>\n\n`
       }
     }
   }

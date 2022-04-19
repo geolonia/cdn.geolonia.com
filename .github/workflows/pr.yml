@@ -34,7 +34,6 @@ jobs:
           COMMENT="${COMMENT//'%'/'%25'}"
           COMMENT="${COMMENT//$'\n'/'%0A'}"
           COMMENT="${COMMENT//$'\r'/'%0D'}"
-          COMMENT="${COMMENT//$' '/'%20'}"
           echo ::set-output name=comment::$COMMENT
 
       - name: Post comment
