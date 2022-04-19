@@ -4,7 +4,6 @@ import fetch from "node-fetch"
 import fs from 'fs/promises'
 import child_process from "child_process"
 import util from 'util'
-
 const exec = util.promisify(child_process.exec)
 
 const [, , BRANCH1, BRANCH2] = process.argv
@@ -48,11 +47,11 @@ const main = async () => {
     const style2 = styleMap2[styleId]
     comment += `### ${styleId}.json\n\n`
     if(!style1) {
-
+      comment += 'Created.\n\n'
     } else if(!style2) {
-
+      comment += 'Deleted.\n\n'
     } else {
-      const { stdout: diff } = await exec(`diff <(echo '${style1}') <(echo '${style2}')`)
+      const { stdout: diff } = await exec(`diff <(echo '${style1}') <(echo '${style2}')`, { shell: '/bin/bash' })
       if(diff) {
         comment += `\`\`\`diff\n${diff}\n\`\`\`\n\n`
       } else {
