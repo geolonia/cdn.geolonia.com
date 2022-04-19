@@ -21,37 +21,45 @@ const getJSON = async (branchName, path) => {
   }
 }
 
-const getStyleMap = async (branch) => {
+const getStyleLocation = (branchName, path) => {
+  if(branchName === process.env.BRANCH_NAME) {
+    return `<(cat "./public/style/${path}" | jq)`
+  } else {
+    return `<(curl -sL "${URL_BASE}/${branchName}/public/style/${path}" | jq)`
+  }
+}
+
+const getStyleLocationMap = async (branch) => {
   const styleIds = await getJSON(branch, 'styles.json')
   const i18nizedStyleIds = styleIds.flatMap(styleId => LANGS.map(lang => `${styleId}/${lang}`))
-  const styles = await Promise.all(i18nizedStyleIds.map(styleId => getJSON(branch, `${styleId}.json`)))
+  const styleLocations = await Promise.all(i18nizedStyleIds.map(styleId => getStyleLocation(branch, `${styleId}.json`)))
   const styleMap = i18nizedStyleIds.reduce((prev, styleId, index) => {
-    prev[styleId] = JSON.stringify(styles[index], null, 2)
+    prev[styleId] = styleLocations[index]
     return prev
   }, {})
   return styleMap
 }
 
 const main = async () => {
-  const styleMap1 = await getStyleMap(BRANCH1)
-  const styleMap2 = await getStyleMap(BRANCH2)
+  const [styleLocationMap1, styleLocationMap2] = await Promise.all([getStyleLocationMap(BRANCH1), getStyleLocationMap(BRANCH2)])
   const styleIds = [...new Set([
-    ...Object.keys(styleMap1),
-    ...Object.keys(styleMap2),
+    ...Object.keys(styleLocationMap1),
+    ...Object.keys(styleLocationMap2),
   ])]
 
   let comment = `## Style Diff\n\n`
 
   for (const styleId of styleIds) {
-    const style1 = styleMap1[styleId]
-    const style2 = styleMap2[styleId]
+    const styleLocation1 = styleLocationMap1[styleId]
+    const styleLocation2 = styleLocationMap2[styleId]
     comment += `### ${styleId}.json\n\n`
-    if(!style1) {
+    if(!styleLocation1) {
       comment += 'Created.\n\n'
-    } else if(!style2) {
+    } else if(!styleLocation2) {
       comment += 'Deleted.\n\n'
     } else {
-      const { stdout: diff } = await exec(`diff <(echo "${style1}") <(echo "${style2}")`, { shell: '/bin/bash' })
+      // supress diff exit code 1
+      const { stdout: diff } = await exec(`diff ${styleLocation1} ${styleLocation2} || true`, { shell: '/bin/bash' })
       if(diff) {
         comment += `\`\`\`diff\n${diff}\n\`\`\`\n\n`
       } else {
