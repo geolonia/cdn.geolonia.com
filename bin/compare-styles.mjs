@@ -7,6 +7,11 @@ const exec = util.promisify(child_process.exec)
 const [, , BRANCH1, BRANCH2] = process.argv
 const URL_BASE = "https://raw.githubusercontent.com/geolonia/cdn.geolonia.com"
 const LANGS = ['en', 'ja']
+const LABELS = {
+  updated: ':white_check_mark: updated',
+  deleted: ':x: deleted',
+  created: ':new: created',
+}
 
 const getJSON = async (branchName, path) => {
   if(branchName === process.env.BRANCH_NAME) {
@@ -56,15 +61,20 @@ const main = async () => {
 
     // diff returns exit code 1 and this should be supressed
     const { stdout: diff } = await exec(`diff <(${styleCatCommand1} | jq) <(${styleCatCommand2} | jq) || true`, { shell: '/bin/bash' })
-    const status = (style1 && style2 && diff) ? ':white_check_mark: updated' : (
-      (style1 && !style2 && diff) ? ':x: deleted' : (
-        (!style1 && style2 && diff) ? ':new: created' : 'no diffs.'
+
+    const status = (style1 && style2 && diff) ? 'updated' : (
+      (style1 && !style2 && diff) ? 'deleted' : (
+        (!style1 && style2 && diff) ? 'created' : false
       )
     )
 
-    if(status !== 'no diffs.') {
-      comment += `<details><summary><em>${status}</em> <strong>${styleId}.json</strong></summary>\n\n`
-      comment += `\`\`\`diff\n${diff}\n\`\`\`\n</details>\n\n`
+    if(status) {
+      if(status === 'updated') {
+        comment += `- <details><summary><em>${LABELS[status]}</em> <strong>${styleId}.json</strong></summary>\n\n`
+        comment += `    \`\`\`diff\n${diff.split('\n').map(l => `    ${l}`).join('\n')}\n    \`\`\`\n</details>\n\n`
+      } else {
+        comment += `- <em>${LABELS[status]}</em> <strong>${styleId}.json</strong>\n\n`
+      }
     }
   }
 
