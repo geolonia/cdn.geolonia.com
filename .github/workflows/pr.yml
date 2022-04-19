@@ -46,5 +46,5 @@ jobs:
           script: |
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
             process.env.POSTING_COMMENT_BODY ?
-              github.issues.createComment({ issue_number, owner, repo, body: process.env.POSTING_COMMENT_BODY }) |
+              github.issues.createComment({ issue_number, owner, repo, body: process.env.POSTING_COMMENT_BODY }) :
               console.log('No diffs.');

@@ -4,5 +4,6 @@
   "geolonia/midnight",
   "geolonia/red-planet",
   "geolonia/notebook",
-  "geolonia/homework"
+  "geolonia/homework",
+  "geolonia/__test"
 ]
