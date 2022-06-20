@@ -26,4 +26,8 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --exclude "_headers"
+          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --exclude "_headers" --exclude "*.mvt" --exclude "dev/embed" --exclude "v1/embed"
+          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --content-type "application/vnd.mapbox-vector-tile" --exclude="*" --include="*.mvt"
+
+          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control public,max-age=86400 --content-type "application/javascript; charset=UTF-8"
+          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control public,max-age=86400 --content-type "application/javascript; charset=UTF-8"
