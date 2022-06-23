@@ -32,12 +32,22 @@ jobs:
       - name: Deploy to S3
         run: |
           # Deploy most static files
-          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --exclude "_headers" --exclude "*.mvt" --exclude "dev/embed" --exclude "v1/embed" --exclude "dev/embed-chunks" --exclude "v1/embed-chunks"
+          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 \
+            --delete \
+            --cache-control public,max-age=86400 \
+            --exclude "_headers" \
+            --exclude "*.mvt" \
+            --exclude "dev/embed" --exclude "v1/embed" \
+            --exclude "dev/embed-chunks/*" --exclude "v1/embed-chunks/*"
 
           # Deploy mvt tiles (requires special header for automatic compression)
-          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --content-type "application/vnd.mapbox-vector-tile" --exclude="*" --include="*.mvt"
+          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 \
+            --delete \
+            --cache-control public,max-age=86400 \
+            --content-type "application/vnd.mapbox-vector-tile" \
+            --exclude="*" --include="*.mvt"
 
-          # Deploy embed chunks -- because they have fingerprints, they're immutable
+          # Deploy embed chunks -- because they have fingerprints in the filename, they're immutable
           aws s3 sync ./public/dev/embed-chunks s3://gl-cdn-ap-northeast-1/dev/embed-chunks --cache-control "public,max-age=31536000,immutable"
           aws s3 sync ./public/v1/embed-chunks s3://gl-cdn-ap-northeast-1/v1/embed-chunks --cache-control "public,max-age=31536000,immutable"
 
