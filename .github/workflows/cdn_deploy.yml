@@ -31,8 +31,19 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --exclude "_headers" --exclude "*.mvt" --exclude "dev/embed" --exclude "v1/embed"
+          # Deploy most static files
+          aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --exclude "_headers" --exclude "*.mvt" --exclude "dev/embed" --exclude "v1/embed" --exclude "dev/embed-chunks" --exclude "v1/embed-chunks"
+
+          # Deploy mvt tiles (requires special header for automatic compression)
           aws s3 sync ./public s3://gl-cdn-ap-northeast-1 --delete --cache-control public,max-age=86400 --content-type "application/vnd.mapbox-vector-tile" --exclude="*" --include="*.mvt"
 
-          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control public,max-age=86400 --content-type "application/javascript; charset=UTF-8"
-          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control public,max-age=86400 --content-type "application/javascript; charset=UTF-8"
+          # Deploy embed chunks -- because they have fingerprints, they're immutable
+          aws s3 sync ./public/dev/embed-chunks s3://gl-cdn-ap-northeast-1/dev/embed-chunks --cache-control "public,max-age=31536000,immutable"
+          aws s3 sync ./public/v1/embed-chunks s3://gl-cdn-ap-northeast-1/v1/embed-chunks --cache-control "public,max-age=31536000,immutable"
+
+          # Deploy main embed entrypoint
+          # Setting a separate s-maxage for CloudFront because we can create an invalidation
+          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control "public,max-age=86400,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
+          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control "public,max-age=86400,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
+
+          aws cloudfront create-invalidation --distribution-id "E1ZFNBWBSCLVFC" --paths "/v1/embed" "/dev/embed"
