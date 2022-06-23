@@ -31,19 +31,27 @@ jobs:
 
       - name: Deploy to S3
         run: |
+          # Note: The default max-age is set at 3600 seconds or 1 hour. After 1 hour,
+          # the client will mark the resource as stale, and require a refresh.
+          # In most cases, this will result in a if-modified-since conditional request.
+
+          # For resources that are immutable (for example, embed-chunks), the max-age is set to immutable.
+          # For resources that will be manually invalidated, an addition s-maxage so CloudFront keeps the file in its cache as long as possible.
+
           # Deploy most static files
           aws s3 sync ./public s3://gl-cdn-ap-northeast-1 \
             --delete \
-            --cache-control public,max-age=86400 \
+            --cache-control "public,max-age=3600" \
             --exclude "_headers" \
             --exclude "*.mvt" \
             --exclude "dev/embed" --exclude "v1/embed" \
             --exclude "dev/embed-chunks/*" --exclude "v1/embed-chunks/*"
 
           # Deploy mvt tiles (requires special header for automatic compression)
+          # can set max-age to 1 day here because
           aws s3 sync ./public s3://gl-cdn-ap-northeast-1 \
             --delete \
-            --cache-control public,max-age=86400 \
+            --cache-control "public,max-age=86400" \
             --content-type "application/vnd.mapbox-vector-tile" \
             --exclude="*" --include="*.mvt"
 
@@ -53,7 +61,7 @@ jobs:
 
           # Deploy main embed entrypoint
           # Setting a separate s-maxage for CloudFront because we can create an invalidation
-          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control "public,max-age=86400,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
-          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control "public,max-age=86400,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
+          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control "public,max-age=3600,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
+          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control "public,max-age=3600,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
 
           aws cloudfront create-invalidation --distribution-id "E1ZFNBWBSCLVFC" --paths "/v1/embed" "/dev/embed"
