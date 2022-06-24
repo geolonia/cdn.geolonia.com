@@ -60,8 +60,11 @@ jobs:
           aws s3 sync ./public/v1/embed-chunks s3://gl-cdn-ap-northeast-1/v1/embed-chunks --cache-control "public,max-age=31536000,immutable"
 
           # Deploy main embed entrypoint
-          # Setting a separate s-maxage for CloudFront because we can create an invalidation
-          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control "public,max-age=3600,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
-          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control "public,max-age=3600,s-maxage=31536000" --content-type "application/javascript; charset=UTF-8"
+          # I used to use s-maxage here, but after testing decided to revert back to only using max-age.
+          # If you use s-maxage that is much longer than max-age, the age header will be longer than
+          # max-age, and the browser will think that the file is expired. Using max-age will make
+          # CloudFront fetch a new file every 3600 seconds, resetting the Age header
+          aws s3 cp ./public/dev/embed s3://gl-cdn-ap-northeast-1/dev/embed --cache-control "public,max-age=3600" --content-type "application/javascript; charset=UTF-8"
+          aws s3 cp ./public/v1/embed s3://gl-cdn-ap-northeast-1/v1/embed --cache-control "public,max-age=3600" --content-type "application/javascript; charset=UTF-8"
 
           aws cloudfront create-invalidation --distribution-id "E1ZFNBWBSCLVFC" --paths "/v1/embed" "/dev/embed"
