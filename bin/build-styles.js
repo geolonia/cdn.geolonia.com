@@ -15,6 +15,11 @@ const langs = {
   en: '["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]]',
 }
 
+const customSpriteStyles = [
+  'basic',
+  'gsi',
+]
+
 const buildStyle = async (style) => {
   // スタイルをホストしている GitHub Organization を geolonia → geoloniamaps に変更したので下の処理を追加。
   // https://github.com/geolonia/cdn.geolonia.com/pull/37
@@ -22,7 +27,15 @@ const buildStyle = async (style) => {
 
   const url = baseUrl.replace(':style', style)
   const response = await fetch(url)
-  const data = await response.text()
+  let data = await response.text()
+
+  // 独自のスプライトを使用しているスタイルは、スプライト URL を置き換える
+  if (customSpriteStyles.includes(style)) {
+    data = JSON.parse(data)
+    data.sprite = `https://cdn.geolonia.com/sprites/${style}.json`
+    data = JSON.stringify(data)
+  }
+
   const styleDir = path.join(baseDir, 'geolonia', style)
   mkdirp.sync(styleDir)
   for (const lang in langs) {
