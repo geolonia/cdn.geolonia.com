@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:styles && npm run build:geocoder && npm run build:embed && npm run build:address",
+    "build": "npm run build:styles && npm run build:geocoder && npm run build:embed",
     "build:tiles": "bash bin/build-tiles.sh",
     "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/",
     "build:embed": "bash ./bin/build-embed.sh",
     "build:plugins": "bash ./bin/build-plugins.sh",
     "build:geocoder": "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/geolonia/community-geocoder/master/docs/api.js -o public/community-geocoder.js",
-    "build:address": "rimraf public/address/japan && node bin/build-address.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
