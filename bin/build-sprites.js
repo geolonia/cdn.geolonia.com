@@ -31,17 +31,8 @@ const buildSprite = async (style) => {
     const response = await fetch(url)
     const outputDir = path.join(baseDir, file)
 
-    if (extension.match(/\.json$/)) {
-
-      const data = await response.text()
-      fs.writeFileSync(outputDir, JSON.stringify(JSON.parse(data), null, 0), 'utf8')
-
-    } else if (extension.match(/\.png$/)) {
-
-      const data = await response.buffer()
-      fs.writeFileSync(outputDir, data)
-
-    }
+    const data = await response.buffer()
+    fs.writeFileSync(outputDir, data)
   }
 }
 
