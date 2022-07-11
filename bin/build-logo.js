@@ -4,15 +4,28 @@ const fetch = require('node-fetch')
 const path = require('path')
 const fs = require('fs')
 
-const url = 'https://geolonia.github.io/logo/geolonia-symbol_1.png'
-const outputDir = path.join(__dirname, '../public/logo/geolonia-symbol_1.png')
+const fileNames = [
+  'geolonia-symbol_1.png',
+  'geolonia-300x46.png',
+  'geolonia-logo_a1.png',
+  'geolonia-logo_b2.jpg'
+]
 
-const buildLogo = async () => {
+const baseDir = 'https://geolonia.github.io/logo/'
+const baseDirOutput = path.join(__dirname, '../public/logo/')
+
+const buildLogo = async (file) => {
+
+  const url = `${baseDir}${file}`
+  const outputDir = path.join(baseDirOutput, file)
 
   const response = await fetch(url)
   const data = await response.buffer()
+
   fs.writeFileSync(outputDir, data)
 
 }
 
-buildLogo()
+fileNames.forEach((file) => {
+  buildLogo(file)
+})
