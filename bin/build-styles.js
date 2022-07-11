@@ -32,7 +32,7 @@ const buildStyle = async (style) => {
   // 独自のスプライトを使用しているスタイルは、スプライト URL を置き換える
   if (customSpriteStyles.includes(style)) {
     data = JSON.parse(data)
-    data.sprite = `https://cdn.geolonia.com/sprites/${style}.json`
+    data.sprite = `https://cdn.geolonia.com/sprites/${style}`
     data = JSON.stringify(data)
   }
 
