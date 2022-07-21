@@ -15,6 +15,11 @@ const langs = {
   en: '["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]]',
 }
 
+const langsGlobal = {
+  ja: '["case", ["==", ["string", ["get", "name:ja"], ["get", "name"]], ["get", "name"]], ["string", ["get", "name:ja"], ["get", "name"]], ["concat", ["get", "name:ja"], "\n", ["get", "name"]]]',
+  en: '["case", ["==", ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]], ["get", "name"]], ["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]], ["concat", ["string", ["get", "name:en"], ["get", "name:latin"]], "\n", ["get", "name"]]]',
+}
+
 const customSpriteStyles = [
   'basic',
   'gsi',
@@ -39,7 +44,20 @@ const buildStyle = async (style) => {
   const styleDir = path.join(baseDir, 'geolonia', style)
   mkdirp.sync(styleDir)
   for (const lang in langs) {
-    const styleJson = data.replace(/"{name}"/g, langs[lang])
+
+    let styleJson;
+
+    if (style === 'basic') {
+
+      // 世界用のラベル表記を設定
+      styleJson = data.replace(/"{name}"/g, langsGlobal[lang])
+
+    } else {
+
+      styleJson = data.replace(/"{name}"/g, langs[lang])
+
+    }
+
     const file = path.join(styleDir, `${lang}.json`)
     fs.writeFileSync(file, JSON.stringify(JSON.parse(styleJson), null, 0), 'utf8')
   }
