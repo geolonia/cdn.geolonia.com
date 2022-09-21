@@ -11,8 +11,8 @@ const baseDir = path.join(__dirname, '../public/style')
 const styles = require(path.join(__dirname, '../styles.json'))
 
 const langs = {
-  ja: '["string", ["get", "name:ja"], ["get", "name"]]',
-  en: '["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]]',
+  ja: '["concat", ["get", "name:ja"], "\\n", ["get", "name"]]',
+  en: '["concat", ["string", ["get", "name:en"], ["get", "name:latin"]], "\\n", ["get", "name"]]',
 }
 
 const customSpriteStyles = [
