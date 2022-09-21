@@ -8,6 +8,7 @@ const baseUrl = 'https://geoloniamaps.github.io/'
 
 const spriteIds =[
   'basic',
+  'basic-world',
   'gsi'
 ]
 
