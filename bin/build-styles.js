@@ -11,6 +11,11 @@ const baseDir = path.join(__dirname, '../public/style')
 const styles = require(path.join(__dirname, '../styles.json'))
 
 const langs = {
+  ja: '["string", ["get", "name:ja"], ["get", "name"]]',
+  en: '["string", ["get", "name:en"], ["string", ["get", "name:latin"], ["get", "name"]]]',
+}
+
+const worldLangs = {
   ja: '["concat", ["get", "name:ja"], "\\n", ["get", "name"]]',
   en: '["concat", ["string", ["get", "name:en"], ["get", "name:latin"]], "\\n", ["get", "name"]]',
 }
@@ -18,6 +23,10 @@ const langs = {
 const customSpriteStyles = [
   'basic',
   'gsi',
+]
+
+const customLangStyles = [
+  'basic-world',
 ]
 
 const buildStyle = async (style) => {
@@ -38,8 +47,17 @@ const buildStyle = async (style) => {
 
   const styleDir = path.join(baseDir, 'geolonia', style)
   mkdirp.sync(styleDir)
-  for (const lang in langs) {
-    const styleJson = data.replace(/"{name}"/g, langs[lang])
+
+  let langExpressions = {}
+
+  if (customLangStyles.includes(style)) {
+    langExpressions = worldLangs
+  } else {
+    langExpressions = langs
+  }
+
+  for (const lang in langExpressions) {
+    const styleJson = data.replace(/"{name}"/g, langExpressions[lang])
     const file = path.join(styleDir, `${lang}.json`)
     fs.writeFileSync(file, JSON.stringify(JSON.parse(styleJson), null, 0), 'utf8')
   }
