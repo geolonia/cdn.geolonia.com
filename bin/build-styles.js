@@ -17,6 +17,7 @@ const langs = {
 
 const customSpriteStyles = [
   'basic',
+  'basic-world',
   'gsi',
 ]
 
