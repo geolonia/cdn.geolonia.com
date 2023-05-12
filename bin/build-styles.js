@@ -17,7 +17,7 @@ const langs = {
 
 const customSpriteStyles = [
   'basic',
-  'basic-world',
+  'basic-v1',
   'gsi',
 ]
 
@@ -37,12 +37,18 @@ const buildStyle = async (style) => {
     data = JSON.stringify(data)
   }
 
-  const styleDir = path.join(baseDir, 'geolonia', style)
-  mkdirp.sync(styleDir)
-  for (const lang in langs) {
-    const styleJson = data.replace(/"{name}"/g, langs[lang])
-    const file = path.join(styleDir, `${lang}.json`)
-    fs.writeFileSync(file, JSON.stringify(JSON.parse(styleJson), null, 0), 'utf8')
+  const styleDirs = [path.join(baseDir, 'geolonia', style)];
+  if (style === 'basic-v1') {
+    // alias for basic-world
+    styleDirs.push(path.join(baseDir, 'geolonia', 'basic-world'));
+  }
+  for (const styleDir of styleDirs) {
+    mkdirp.sync(styleDir);
+    for (const lang in langs) {
+      const styleJson = data.replace(/"{name}"/g, langs[lang])
+      const file = path.join(styleDir, `${lang}.json`)
+      fs.writeFileSync(file, JSON.stringify(JSON.parse(styleJson), null, 0), 'utf8')
+    }
   }
 }
 
