@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:styles && npm run build:geocoder && npm run build:embed",
     "build:tiles": "bash bin/build-tiles.sh",
-    "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/ && node ./bin/build-sprites.js && cp -rT public/style/geolonia/basic-v1 public/style/geolonia/basic-world",
+    "build:styles": "node ./bin/build-styles.js && cp ./styles.json public/style/ && node ./bin/build-sprites.js",
     "build:embed": "bash ./bin/build-embed.sh",
     "build:plugins": "bash ./bin/build-plugins.sh",
     "build:geocoder": "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/geolonia/community-geocoder/master/docs/api.js -o public/community-geocoder.js",
