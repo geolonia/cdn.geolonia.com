@@ -12,9 +12,9 @@ npm remove @geolonia/embed
 npm install @geolonia/embed -D
 
 # v1
-rsync -a node_modules/@geolonia/embed/dist/ ./public/v1/
+rsync -av --exclude '*.d.ts' node_modules/@geolonia/embed/dist/ ./public/v1/
 mv ./public/v1/embed.js ./public/v1/embed
 
 # dev (when dev is the same as production @geolonia/embed)
-rsync -a node_modules/@geolonia/embed/dist/ ./public/dev/
+rsync -av --exclude '*.d.ts' node_modules/@geolonia/embed/dist/ ./public/dev/
 mv ./public/dev/embed.js ./public/dev/embed
