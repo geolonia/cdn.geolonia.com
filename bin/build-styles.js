@@ -58,6 +58,9 @@ const copyStyleFromGeoloniamaps = async (style) => {
   const response = await fetch(styleJsonURL);
   const data = await response.text();
 
+  const styleJson = JSON.parse(data);
+  const minifiedStyleJson = JSON.stringify(styleJson, null, 0);
+
   const langIds = Object.keys(langs);
   const outputs = [
     path.join(baseDir, `${style}.json`),
@@ -66,7 +69,7 @@ const copyStyleFromGeoloniamaps = async (style) => {
   for (const outputFile of outputs) {
     const dir = path.dirname(outputFile);
     mkdirp.sync(dir);
-    fs.writeFileSync(outputFile, data, 'utf8');
+    fs.writeFileSync(outputFile, minifiedStyleJson, 'utf8');
   }
 }
 
