@@ -52,6 +52,39 @@ const buildStyle = async (style) => {
   }
 }
 
-styles.forEach((style) => {
-  buildStyle(style)
-})
+const copyStyleFromGeoloniamaps = async (style) => {
+  const styleName = style.split('/')[1];
+  const styleJsonURL = `https://${styleName}.styles.geoloniamaps.com/style.json`;
+  const response = await fetch(styleJsonURL);
+  const data = await response.text();
+
+  const styleJson = JSON.parse(data);
+  const minifiedStyleJson = JSON.stringify(styleJson, null, 0);
+
+  const langIds = Object.keys(langs);
+  const outputs = [
+    path.join(baseDir, `${style}.json`),
+    ...langIds.map((lang) => path.join(baseDir, style, `${lang}.json`)),
+  ]
+  for (const outputFile of outputs) {
+    const dir = path.dirname(outputFile);
+    mkdirp.sync(dir);
+    fs.writeFileSync(outputFile, minifiedStyleJson, 'utf8');
+  }
+}
+
+(async () => {
+  for (const style of styles) {
+    const orgName = style.split('/')[0];
+    if (orgName === 'geolonia') {
+      await buildStyle(style);
+    } else if (orgName === 'geoloniamaps') {
+      await copyStyleFromGeoloniamaps(style);
+    } else {
+      console.error(`Unknown organization name: ${orgName}`);
+    }
+  }
+})().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
