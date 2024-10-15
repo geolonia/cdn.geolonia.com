@@ -1,0 +1,12 @@
+{
+  "format": "pbf",
+  "name": "GSI Japan",
+  "attribution": "<a href=\"https://www.gsi.go.jp/\" target=\"_blank\">&copy; GSI Japan</a>",
+  "minzoom": 4,
+  "maxzoom": 16,
+  "id": "optibv-gsi-japan",
+  "tilejson": "2.0.0",
+  "tiles": [
+    "https://cyberjapandata.gsi.go.jp/xyz/optimal_bvmap-v1/{z}/{x}/{y}.pbf"
+  ]
+}
