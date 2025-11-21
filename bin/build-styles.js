@@ -18,6 +18,7 @@ const langs = {
 const customSpriteStyles = [
   'basic',
   'basic-v1',
+  'basic-v2',
   'gsi',
 ]
 

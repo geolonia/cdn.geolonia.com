@@ -9,6 +9,7 @@ const baseUrl = 'https://geoloniamaps.github.io/';
 const spriteIds = [
   'basic',
   'basic-v1',
+  'basic-v2',
   'gsi',
 ];
 
