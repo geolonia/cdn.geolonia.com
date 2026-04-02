@@ -16,15 +16,15 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Restore timestamps
-        uses: chetan/git-restore-mtime-action@v1
+        uses: chetan/git-restore-mtime-action@v2
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-region: ap-northeast-1
           role-to-assume: arn:aws:iam::762706324393:role/github-actions-cdn-geolonia-deploy
