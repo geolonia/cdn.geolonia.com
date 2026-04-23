@@ -8,25 +8,13 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
-
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: '22.x'
+          cache: 'npm'
 
       - run: npm ci
 
@@ -36,20 +24,17 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref }}
         run: |
           COMMENT=$(node bin/compare-styles.mjs $BASE_BRANCH $BRANCH_NAME)
-          COMMENT="${COMMENT//'%'/'%25'}"
-          COMMENT="${COMMENT//$'\n'/'%0A'}"
-          COMMENT="${COMMENT//$'\r'/'%0D'}"
-          echo ::set-output name=comment::$COMMENT
+          echo "comment<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Post comment
-        uses: actions/github-script@v4
-        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v8
+        if: github.event_name == 'pull_request' && steps.create_comment_diff.outputs.comment
         env:
           POSTING_COMMENT_BODY: ${{ steps.create_comment_diff.outputs.comment }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
-            process.env.POSTING_COMMENT_BODY ?
-              github.issues.createComment({ issue_number, owner, repo, body: process.env.POSTING_COMMENT_BODY }) :
-              console.log('No diffs.');
+            const { issue: { number: issue_number }, repo: { owner, repo } } = context;
+            await github.rest.issues.createComment({ issue_number, owner, repo, body: process.env.POSTING_COMMENT_BODY });
