@@ -46,7 +46,8 @@ jobs:
             --exclude "*.mvt" \
             --exclude "dev/embed" --exclude "v1/embed" \
             --exclude "dev/embed-chunks/*" --exclude "v1/embed-chunks/*" \
-            --exclude "embed/*"
+            --exclude "embed/*" \
+            --exclude "maps-suite/*"
 
           # Deploy mvt tiles (requires special header for automatic compression)
           # can set max-age to 1 day here because
